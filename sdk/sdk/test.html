@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ekiliRelay example</title>
+</head>
+<body>
+    <button id="send">SEND</button>
+    <script type="module">
+        const sendBtn = document.getElementById("send")
+        import EkiliRelay from './js/ekiliRelay.js';
+
+        // Initialize the SDK  
+        const sdk = new EkiliRelay();
+
+        sendBtn.addEventListener("click",()=>{
+            // Send an email
+            sdk.sendEmail('example@gmail.com', 'Test Subject', 'This is a test message.', 'From: example@ekilie.com')
+                .then(response => {
+                    if (response.status === 'success') {
+                        console.log('Email sent successfully.');
+                    } else {
+                        console.log('Failed to send email: ' + response.message);
+                        console.log(response)
+                    }
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
+
+        })
+    </script>
+</body>
+</html>

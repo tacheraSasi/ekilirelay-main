@@ -1,0 +1,203 @@
+
+.add {
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    height: 580px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .add .add-card {
+    display: flex;
+    display: flex;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.863);
+    overflow: hidden;
+  }
+  
+  .add .left {
+    flex: 1;
+    background-size: cover;
+    margin:8px;
+    border-radius: 8px;
+    color: white;
+    padding: 50px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
+  
+  }
+  
+  .add h1 {
+    font-size: 60px;
+    line-height: 70px;
+  }
+  
+  .add button {
+    width: 50%;
+    color: #33995d;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .add button:hover {
+    transform: scale(0.968);
+  }
+  
+  .add .logo-container{
+    background-color:#000000a4 ;
+    display: inline-flex;
+    text-align: center;
+    padding:3px;
+    border-radius: 1rem;
+    cursor: pointer;
+  }
+  .add .logo{
+    width: 25px;
+    height: 25px;
+    border-radius:50%;
+    margin-right:8px
+  }
+  .add .logo-text{
+    margin:auto;
+    font-size: 20px;
+  }
+  
+  .add .right {
+    flex: 2;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 20px;
+    color: #b4b4b4;
+  
+  }
+  .add .sub-heading{
+    font-size:small;
+  }
+  
+  .add form {
+    display: flex;
+    text-align: center;
+    gap: 10px;
+    flex-direction: column;
+    width: 65%;
+  }
+  .add input {
+    color: #fff;
+    background-color: transparent;
+    border:solid 1.7px rgba(99, 167, 99, 0.822);
+    outline:none;
+    padding: .5rem;
+    transition:all ease-in-out .7s;
+    border-radius:1rem;
+  }
+  .add input:focus{
+    border:solid 1.7px rgb(153, 250, 153);
+  }
+  
+  .add button {
+    width: 100%;
+    background-color: #65c08bc4;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .add button:hover {
+    transform: scale(0.968);
+  }
+    
+  
+  /* updated styles */
+  
+  .error-text{
+    display: none;
+  }
+  #typingText{
+    font-weight:450;
+  }
+  .google{
+    margin:8px 0;
+  
+  }
+  .google button{
+    padding :1rem;
+    width: 100%;
+    border:solid lightgreen 2px;
+    border-radius:8px;
+    background-color: transparent;
+    color:lightgreen ;
+    cursor: pointer;
+  }
+  .google button:hover{
+    background-color: #33995d;
+    color:black;
+    border:solid #33995d 2px;
+  }
+  .google button:active{
+    transform:scale(.98)
+  }
+  @media screen and (max-width:995px) {
+    .add{
+      height: 500px;
+    }
+   
+    .add .left{
+      display: none;
+    }
+    .add .right{
+      padding: 1rem;
+    }
+    
+  }
+  
+  #countrySelect, select {
+    color: #646464;
+    background-color: transparent;
+    border:solid 1.7px rgba(99, 167, 99, 0.822);
+    outline:none;
+    padding: 1rem;
+    transition:all ease-in-out .7s;
+    border-radius:1.5rem;
+    width: 100%;
+  }
+
+/* manage-btn  */
+.manage-btn-container{
+  
+  width: 100%;
+  padding: 1rem;
+  
+
+}
+.manage-btn-container .manage-content{
+  width: 100%;
+  display: flex;
+  gap:10px;
+  background: linear-gradient(rgba(39, 114, 70, 0.699),
+   rgba(4, 28, 32, 0.586)) left;
+  border-radius:1rem;
+  border:1px solid gray;
+  padding:5px
+}
+.manage-btn-container .manage-btn{
+  border-radius:1rem;
+  border:none;
+  flex:1;
+  margin:auto ;
+  outline:none;
+  color:white;
+}
