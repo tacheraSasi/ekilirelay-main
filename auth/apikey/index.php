@@ -36,15 +36,15 @@
 
   <link rel="apple-touch-icon" href="https://relay.ekilie.com/img/ekilirelay.jpeg">
 
-  <link href="https://relay.ekilie.com/docs/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://relay.ekilie.com/docs/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="https://relay.ekilie.com/docs/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="https://relay.ekilie.com/docs/assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="https://relay.ekilie.com/docs/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="https://relay.ekilie.com/docs/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="https://relay.ekilie.com/docs/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="../../docs/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../docs/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../docs/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../../docs/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="../../docs/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="../../docs/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../../docs/assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
-  <link href="https://sense.ekilie.com/console/assets/css/style.css" rel="stylesheet">
+  <link href="../../docs/assets/css/style.css" rel="stylesheet">
 
   <style>
     .header, .footer {
@@ -266,15 +266,15 @@
   
   <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="xjwsJBTYFD" data-description="Support me on Buy me a coffee!" data-message="Love ekiliRelay? Help keep it free and growing by buying me a coffee! ☕" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
-  <script src="https://relay.ekilie.com/docs/assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="https://relay.ekilie.com/docs/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="https://relay.ekilie.com/docs/assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="https://relay.ekilie.com/docs/assets/vendor/echarts/echarts.min.js"></script>
-  <script src="https://relay.ekilie.com/docs/assets/vendor/quill/quill.min.js"></script>
-  <script src="https://relay.ekilie.com/docs/assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="https://relay.ekilie.com/docs/assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="https://relay.ekilie.com/docs/assets/vendor/php-email-form/validate.js"></script>
-  <script src="https://relay.ekilie.com/docs/assets/js/main.js"></script>
+  <script src="../../docs/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="../../docs/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../docs/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="../../docs/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="../../docs/assets/vendor/quill/quill.min.js"></script>
+  <script src="../../docs/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="../../docs/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="../../docs/assets/vendor/php-email-form/validate.js"></script>
+  <script src="../../docs/assets/js/main.js"></script>
   <script>
     document.getElementById('shareBtn').addEventListener('click', () => {
       if (navigator.share) {

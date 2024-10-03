@@ -1,7 +1,7 @@
 <?php 
   session_start();
   if (isset($_SESSION['relay_user'])) {
-    header("location: ../apikey");
+    header("location: ../../console");
   }
 ?> 
 <!DOCTYPE html>

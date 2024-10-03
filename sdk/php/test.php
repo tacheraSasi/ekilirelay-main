@@ -7,7 +7,12 @@ if(isset($_POST["send"])){
     $subject = $_POST['subject'];
     $message = $_POST['message'];
 
-    $response = $ekiliRelay->sendEmail($to,$subject,$message);
+    $response = $ekiliRelay->sendEmail(
+        $to,
+        $subject,
+        $message,
+        "From: tach <tacherasasi@gmail.com>"
+    );
     print_r($response);
     
 }

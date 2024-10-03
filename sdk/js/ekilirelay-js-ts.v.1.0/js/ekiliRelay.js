@@ -46,17 +46,17 @@ class EkiliRelay {
             const response = await fetch(this.apiUrl, {
                 method: 'POST',                  // HTTP method to use
                 headers: {
-                    'Content-Type': 'application/json' // Specify that we are sending JSON data
+                    'Content-Type': 'application/json' // Specifying that we are sending JSON data
                 },
-                body: JSON.stringify(data)   // Convert the data object to a JSON string
+                body: JSON.stringify(data)   // Converting the data object to a JSON string
             });
 
-            // Parse the JSON response from the server
+            // Parseing the JSON response from the server
             const result = await response.json();
-            // Return the result of the email sending operation
+            // Returning the result of the email sending operation
             return result;
         } catch (error) {
-            // Return an error object if something goes wrong
+            // Returning an error object if something goes wrong
             return { status: 'error', message: error.message };
         }
     }

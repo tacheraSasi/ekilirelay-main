@@ -1,8 +1,8 @@
 <?php
   $hostname = "localhost";
-  $username = "u489000680_tach_relay";
+  $username = "root";
   $password = "Tachy2004!";
-  $dbname = "u489000680_ekilirelay";
+  $dbname = "ekilirelay";
 
   $conn = mysqli_connect($hostname, $username, $password, $dbname);
   if(!$conn){

@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once "../../config.php";
+include_once "../../../config.php";
 
-require '../../vendor/autoload.php';
+require '../../../vendor/autoload.php';
 
 $username = mysqli_real_escape_string($conn, $_POST['name']);
 $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -13,7 +13,7 @@ if (!empty($username) && !empty($email)  && !empty($password)) {
     $sql = mysqli_query($conn, "SELECT * FROM users WHERE email = '{$email}' 
            OR name = '{$username}'");
     if (mysqli_num_rows($sql) > 0) {
-        echo "username $username is already taken.";
+        echo "username $username is already taken or email ";
     } else {
         $ran_id = rand(time(), 700000000);
         if($password == $confirmPassword){

@@ -1,3 +1,23 @@
+<?php 
+  session_start();
+  include_once "../config.php";
+  if (!isset($_SESSION['relay_user'])) {
+    header("location: ../auth/login/");
+  }
+  $user_unique_id = $_SESSION['relay_user'];
+  $select_user = "SELECT * FROM users WHERE unique_id = '$user_unique_id'";
+  $result_user = mysqli_query($conn, $select_user);
+  $user_info = mysqli_fetch_assoc($result_user);
+  $username = $user_info['name'];
+
+  $select_api = mysqli_query($conn,"SELECT * FROM data WHERE user = '$user_unique_id'");
+  $data = mysqli_fetch_array($select_api);
+  $api_key = $data['api_key'];
+  $sent_count = $data['emails_sent'];
+  $total = $data['requests'];
+  $failed_count = $total - $sent_count;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,28 +25,12 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>ekiliRelay Documentation</title>
-  <meta content="ekiliRelay is a free email API service designed for developers, providing easy email sending capabilities." name="description">
-  <meta content="email API, free email API, developer tools, email sending service, simple, lightweight ekilie, ekili " name="keywords">
-
+  <title>ekiliRelay apiKey</title>
+  
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="ekiliRelay - Free Email API">
-  <meta property="og:description" content="ekiliRelay is a free email API service designed for developers, providing easy email sending capabilities.">
-  <meta property="og:url" content="https://relay.ekilie.com">
-  <meta property="og:image" content="https://ekilie.com/../assets/img/favicon.jpeg">
-
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:title" content="ekiliRelay - Free Email API">
-  <meta property="twitter:description" content="ekiliRelay is a free email API service designed for developers, providing easy email sending capabilities.">
-  <meta property="twitter:image" content="https://ekilie.com/../assets/img/favicon.jpeg">
-
-  <meta name="robots" content="index, follow">
-  <meta name="keywords" content="email API, free email API, developer tools, email sending service, ekiliRelay, email API service,ekili, ekilie, free email">
 
   <meta name="author" content="Tachera Sasi">
 
@@ -35,8 +39,6 @@
   <link rel="icon" href="https://relay.ekilie.com/img/ekilirelay.jpeg" type="image/x-icon">
 
   <link rel="apple-touch-icon" href="https://relay.ekilie.com/img/ekilirelay.jpeg">
-
-  <link rel="manifest" href="manifest.json">
 
   <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -47,7 +49,6 @@
   <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
   <link href="../assets/css/style.css" rel="stylesheet">
-  <!-- <link href="https://sense.ekilie.com/console/../assets/css/style.css" rel="stylesheet"> -->
 
   <style>
     .header, .footer {
@@ -78,6 +79,16 @@
       padding: 1em;
       border-radius: 4px;
       display: block;
+      overflow-x: auto;
+    }
+    span code {
+      background-color: #272822;
+      color: #f8f8f2;
+      padding: 1em;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       overflow-x: auto;
     }
 
@@ -118,22 +129,52 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="#" class="logo d-flex align-items-center">
-        <span class="d-none d-lg-block">ekiliRelay Docs</span>
+        <span class="d-none d-lg-block">ekiliRelay</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-        <li>
+        <!-- <li>
             <a href="https://www.producthunt.com/posts/ekilirelay?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-ekilirelay" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=481838&theme=dark" alt="ekiliRelay - Completely&#0032;Free&#0032;Email&#0032;API&#0032; | Product Hunt" style="width: 250px; height: 40px;" width="250" height="54" /></a>
-        </li>
+        </li> -->
         
         <li class="nav-item">
           <button style="border: none;margin-right:1rem" class="btn-new" id="shareBtn">
-            <i class="bi bi-share"></i> Share
+            <i class="bi bi-share"></i> 
+            <span class="d-none d-md-block">Share</span>
           </button>
         </li>
+        
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="../assets/img/user.png" alt="Profile" class="">
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?=$username?></span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6 id="school-name-h6"><?=$username?></h6>
+              <span>ekiliRelay</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            
+
+            <!-- <li>
+              <a class="dropdown-item d-flex align-items-center" href="logout.php?ref=<?=$school_uid?>">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li> -->
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
       </ul>
     </nav><!-- End Icons Navigation -->
   </header><!-- End Header -->
@@ -142,29 +183,24 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link collapsed" href="./">
+        <a class="nav-link " href="./">
           <i class="bi bi-file-arrow-down"></i>
           <span>Console</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#installation">
+        <a class="nav-link collapsed" href="https://relay.ekilie.com">
           <i class="bi bi-file-arrow-down"></i>
-          <span>Installation</span>
+          <span>Documentation</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#usage">
+        <a class="nav-link collapsed" href="#apikey">
           <i class="bi bi-file-arrow-down"></i>
-          <span>Usage</span>
+          <span>Api key</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#faq">
-          <i class="bi bi-question-circle"></i>
-          <span>FAQ</span>
-        </a>
-      </li>
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="#contact">
           <i class="bi bi-envelope"></i>
@@ -177,7 +213,7 @@
 
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Documentation</h1>
+      <h1>Console</h1>
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
@@ -185,90 +221,100 @@
         <!-- Left side columns -->
         <div class="col-lg-12">
           <div class="row">
-            <!-- Installation -->
-            <div class="" id="installation">
-              <div class="card info-card customers-card">
+          <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card" style="border-radius: 1rem;">
+
                 <div class="card-body">
-                  <h5 class="card-title">Installation <span>| JS</span></h5>
-                  <p>To get started with ekiliRelay, download the SDK as a zip file and include it in your project.</p>
-                  <ol>
-                    <li>Download the SDK from the button below:
-                      <div class="btn-new">
-                        <i class="bi bi-file-arrow-down"></i>
-                        <span><a href="https://relay.ekilie.com/sdk/ekilirelay-js-ts.v.1.0.zip" download>Download SDK</a></span>
-                      </div>
-                    </li>
-                    <li>Get your api key <a href="../console/">api key</a></li>
-                    <li>Unzip the downloaded file.</li>
-                    <li>Import the SDK in your project </li>
-                  </ol>
-                  <pre><code>import EkiliRelay from '../path-to/sdk/js/ekiliRelay.js';</code></pre>
-                </div>
-              </div>
-            </div><!-- End Installation -->
+                  <h5 class="card-title">Sent <span>| all</span></h5>
 
-            <!-- Usage -->
-            <div class="" id="usage">
-              <div class="card info-card customers-card">
-                <div class="card-body">
-                  <h5 class="card-title">Usage <span>| JS/TS</span></h5>
-                  <p>After including the SDK, you can start using ekiliRelay 
-                    to send emails. Here's a quick example:
-                    <br>(This apply for both javascript and typescript)</p>
-                  <pre><code>&lt;script type="module"&gt;
-const sendBtn = document.getElementById("send"); //some button
-import EkiliRelay from '../path-to/sdk/js/ekiliRelay.js'; //importing EkiliRelay
-
-// Initialize the SDK  
-const sdk = new EkiliRelay('your-api-key');//your-api-key goes here
-
-sendBtn.addEventListener("click", () => {//listening to a click event
-  // Send an email
-  sdk.sendEmail('email@example.com', 'Test Subject', 'This is a test message.', 'From: some-email@example.com')
-    .then(response => {
-      if (response.status === 'success') {
-        console.log('Email sent successfully.');
-      } else {
-        console.log('Failed to send email: ' + response.message);
-        console.log(response);
-      }
-    })
-    .catch(error => {
-      console.log('Error:', error);
-    });
-});
-&lt;/script&gt;</code></pre>
-                  <p>This simple example demonstrates how to initialize the ekiliRelay SDK and send an email in js/ts</p>
-                </div>
-              </div>
-            </div><!-- End Usage -->
-
-            <!-- FAQ -->
-            <div class="" id="faq">
-              <div class="card info-card customers-card">
-                <div class="card-body">
-                  <h5 class="card-title">FAQ <span>| JS/TS</span></h5>
-                  <div class="faq-item">
-                    <h5>How do I get started with ekiliRelay?</h5>
-                    <p>Simply download the SDK, include it in your project, and follow the usage instructions.</p>
-                  </div>
-                  <div class="faq-item">
-                    <h5>Is ekiliRelay really free?</h5>
-                    <p>Yes, ekiliRelay is completely free to use.</p>
-                  </div>
-                  <div class="faq-item">
-                    <h5>Can I customize the email template?</h5>
-                    <p>Yes, you can customize the email body as per your requirements using HTML and CSS.</p>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-check"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6><?=$sent_count?>/<?=$total?></h6>
+                     
+                    </div>
                   </div>
                 </div>
+
               </div>
-            </div><!-- End FAQ -->
+            </div><!-- -->
+
+            <!--  -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+
+                
+
+                <div class="card-body">
+                  <h5 class="card-title">failed <span>| all</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-exclamation-octagon"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6><?=$failed_count?>/<?=$total?></h6>
+                      <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+ -->
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End -->
+            <div class="col-xxl-4 col-xl-12" id="apikey">
+              <div class="card info-card customers-card">
+                <div class="card-body">
+                  <h5 class="card-title">Habari, <?=$username?></h5>
+                  <p>This is you api key.</p>
+                  
+                  <span>
+                  <code class="d-flex justify-between items-center">
+                    <span id="api-key"><?=$api_key?> </span>
+                    <button class="btn btn-secondary" id="copy-button">
+                      <i class="bi bi-clipboard"></i> Copy
+                    </button>
+                  </code>
+                </span>
+                
+                <script>
+                  document.getElementById('copy-button').addEventListener('click', function() {
+                    // Geting the API key from the span
+                    var apiKey = document.getElementById('api-key').innerText.trim();
+                
+                    // Creating a temporary textarea element to copy the API key
+                    var tempInput = document.createElement('textarea');
+                    tempInput.value = apiKey;
+                    document.body.appendChild(tempInput);
+                
+                    // Selecting the text inside the textarea and copy it
+                    tempInput.select();
+                    document.execCommand('copy');
+                
+                    // Removing the temporary textarea from the DOM
+                    document.body.removeChild(tempInput);
+                
+                    // Optional: Provide user feedback, such as changing button text
+                    this.innerHTML = '<i class="bi bi-clipboard-check"></i> Copied!';
+                    
+                    // Reseting button text after a short delay
+                    setTimeout(() => {
+                      this.innerHTML = '<i class="bi bi-clipboard"></i> Copy';
+                    }, 2000);
+                  });
+                </script>
+                
+                </div>
+              </div>
+            </div>
 
             <!-- Contact -->
-            <div class="" id="contact">
+            <div class="col-xxl-4 col-xl-12" id="contact">
               <div class="card info-card customers-card">
                 <div class="card-body">
-                  <h5 class="card-title">Contact <span>| JS</span></h5>
+                  <h5 class="card-title">Contact <span></span></h5>
                   <p>If you have any questions or need further assistance, please reach out to us:</p>
                   <ul>
                     <li>Email: support@ekilie.com</li>
