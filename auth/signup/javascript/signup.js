@@ -15,7 +15,7 @@ continueBtn.onclick = ()=>{
           if(xhr.status === 200){
               let data = xhr.response;
               if(data === "success"){
-                window.location.href = "../apikey"
+                window.location.href = "../../console"
               }else{
                 errorText.style.display = "block";
                 errorText.textContent = data;
