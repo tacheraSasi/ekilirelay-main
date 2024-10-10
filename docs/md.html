@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EkiliRelay SDK Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+        h5 {
+            color: #ffa500; /* Highlighted title color */
+        }
+        p, ol, li {
+            color: #d3d3d3;
+        }
+        a {
+            color: #ffa500;
+            text-decoration: none;
+        }
+        pre {
+            background-color: #2d2d2d;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .btn-new {
+            margin: 10px 0;
+        }
+        .btn-new i {
+            margin-right: 5px;
+            color: #ffa500;
+        }
+        .btn-new a {
+            color: #ffa500;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Installation -->
+<div class="" id="installation">
+    <div class="card info-card customers-card">
+        <div class="card-body">
+            <h5 class="card-title">Installation <span>| JS</span></h5>
+            <p>
+                To get started with ekiliRelay, use npm to install and include it in your project.
+            </p>
+            <ol>
+                <li>Install the SDK using npm:</li>
+                <pre><code class="language-javascript">npm i ekilirelay</code></pre>
+                <li>Import the SDK into your project:</li>
+                <pre><code class="language-javascript">import EkiliRelay from 'ekilirelay';</code></pre>
+            </ol>
+        </div>
+    </div>
+</div>
+<!-- End Installation -->
+
+<!-- Usage -->
+<div class="" id="usage">
+    <div class="card info-card customers-card">
+        <div class="card-body">
+            <h5 class="card-title">Usage <span>| JS/TS</span></h5>
+            <p>
+                After including the SDK, you can start using ekiliRelay to send emails. Here's a quick example:
+            </p>
+            <pre><code class="language-javascript">&lt;script type="module"&gt;
+const sendBtn = document.getElementById("send"); //some button
+import EkiliRelay from 'ekilirelay'; //importing EkiliRelay
+
+// Initialize the SDK  
+const sdk = new EkiliRelay('your-api-key'); //your-api-key goes here
+
+sendBtn.addEventListener("click", () => {
+  // Send an email
+  sdk.sendEmail('email@example.com', 'Test Subject', 'This is a test message.', 'From: some-email@example.com')
+    .then(response => {
+      if (response.status === 'success') {
+        console.log('Email sent successfully.');
+      } else {
+        console.log('Failed to send email: ' + response.message);
+        console.log(response);
+      }
+    })
+    .catch(error => {
+      console.log('Error:', error);
+    });
+});
+&lt;/script&gt;</code></pre>
+            <p>This simple example demonstrates how to initialize the ekiliRelay SDK and send an email using JavaScript or TypeScript.</p>
+        </div>
+    </div>
+</div>
+<!-- End Usage -->
+
+<script>
+    Prism.highlightAll();
+</script>
+
+</body>
+</html>

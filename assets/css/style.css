@@ -75,7 +75,7 @@ h6 {
   overflow: hidden;
   border-radius: 10px;
   background-color: var(--card-bg-color);
-  box-shadow: 0px 0 10px rgba(50, 51, 51, 0.1);
+  box-shadow: 0px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .pagetitle h1 {
@@ -134,7 +134,7 @@ h6 {
   border: 1px solid var(--border-color);
   background: var(--card-bg-color);
   color: #fff;
-  box-shadow: 0 5px 30px 0 rgba(87, 87, 87, 0.2);
+  box-shadow: 0 5px 30px 0 rgba(46, 46, 46, 0.2);
 }
 
 .dropdown-menu .dropdown-header,
@@ -248,7 +248,7 @@ h6 {
   overflow: hidden;
   border-radius: 10px;
   background-color: var(--card-bg-color);
-  box-shadow: 0px 0 10px rgba(50, 51, 51, 0.1);
+  box-shadow: 0px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .card-header,
@@ -421,7 +421,7 @@ h6 {
   transition: all 0.5s;
   z-index: 997;
   height: 60px;
-  box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+  box-shadow: 0px 2px 20px rgba(1, 18, 48, 0.1);
   background-color: var(--card-bg-color);
   border-bottom: var(--border-color) 1px solid;
   padding-left: 20px;
@@ -656,7 +656,7 @@ h6 {
   scrollbar-width: thin;
   scrollbar-color: #979797 transparent;
   border-right: var(--border-color) solid 1px;
-  box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
   background-color: var(--card-bg-color);
 }
  

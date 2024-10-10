@@ -22,20 +22,22 @@ header('Content-Type: application/json');
 
 # Function for validating an email address
 # This function checks if the provided email is in a valid format
-function validateEmail($email) {
+function validateEmail($email)
+{
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
 # Function for logging messages to a file
 # I use this function to append logs to a file for debugging or tracking purposes
-function logMessage($message) {
+function logMessage($message)
+{
     file_put_contents('../logs/email.log', $message . PHP_EOL, FILE_APPEND);
 }
 
 # Checking if the request method is POST
 # I want to make sure this block only runs for POST requests, as this is how I'll receive data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
+
     # Decoding the incoming JSON payload into an associative array
     # I read the raw input (JSON) and convert it into an array for easier handling
     $data = json_decode(file_get_contents('php://input'), true);
@@ -47,11 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         # Escaping the API key to prevent SQL injection
         # I sanitize the API key to protect the database from injection attacks
         $apikey = mysqli_real_escape_string($conn, $data['apikey']);
-        
+
         # Querying the user associated with the provided API key
         # I check if the API key exists and if it matches any user in the database
         $select = mysqli_query($conn, "SELECT user FROM data WHERE api_key = '$apikey';");
-        
+
         # Verifying if the API key is valid
         # If the API key is found, I proceed; otherwise, I reject the request
         if ($select && mysqli_num_rows($select) > 0) {
@@ -66,16 +68,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($select_num_req) {
                 # Fetch the current number of requests
                 $num_req = mysqli_fetch_assoc($select_num_req)['requests'];
-                
+
                 # Increment the number of requests
                 # I increment the request count by one for this user
                 $num_req++;
-                
+
                 # Update the number of requests in the database
                 # Then, I update the database with the new count
                 $update_req = mysqli_query($conn, "UPDATE data SET requests = $num_req WHERE user = '$user_id'");
             }
-            
+
             # Querying the user's information based on the unique ID
             # I fetch the user's details like name and email for sending the email
             $select_user = mysqli_query($conn, "SELECT name, email FROM users WHERE unique_id = '$user_id';");
@@ -90,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $to = $data['to'];
             $subject = $data['subject'];
             $message = $data['message'];
-            
+
             # Adding the necessary email headers
             $headers = "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
@@ -115,14 +117,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($select_num_sent) {
                     # Fetch the current number of emails_sent
                     $num_sent = mysqli_fetch_assoc($select_num_sent)['emails_sent'];
-                    
+
                     # Increment the number of emails_sent
                     $num_sent++;
-                    
+
                     # Update the number of emails_sent in the database
                     $update_req = mysqli_query($conn, "UPDATE data SET emails_sent = $num_sent WHERE user = '$user_id'");
                 }
-                
+
                 # Responding with a success message
                 $response = ['status' => 'success', 'message' => 'Email sent successfully.'];
                 echo json_encode($response);
@@ -147,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         logMessage(json_encode($response));
     }
-    
+
 } else {
     # Responding with an error if the request method is not POST
     # This block handles cases where the request is not POST

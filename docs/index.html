@@ -2,55 +2,65 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
   <title>ekiliRelay Documentation</title>
-  <meta content="ekiliRelay is a free email API service designed for developers, providing easy email sending capabilities." name="description">
-  <meta content="email API, free email API, developer tools, email sending service, simple, lightweight ekilie, ekili " name="keywords">
+  <meta
+    content="ekiliRelay is a free email API service designed for developers, providing easy email sending capabilities."
+    name="description" />
+  <meta content="email API, free email API, developer tools, email sending service, simple, lightweight ekilie, ekili "
+    name="keywords" />
 
   <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet" />
 
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ekiliRelay - Free Email API" />
+  <meta property="og:description"
+    content="ekiliRelay is a free email API service designed for developers, providing easy email sending capabilities." />
+  <meta property="og:url" content="https://relay.ekilie.com" />
+  <meta property="og:image" content="https://ekilie.com/../assets/img/favicon.jpeg" />
 
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="ekiliRelay - Free Email API">
-  <meta property="og:description" content="ekiliRelay is a free email API service designed for developers, providing easy email sending capabilities.">
-  <meta property="og:url" content="https://relay.ekilie.com">
-  <meta property="og:image" content="https://ekilie.com/../assets/img/favicon.jpeg">
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="ekiliRelay - Free Email API" />
+  <meta property="twitter:description"
+    content="ekiliRelay is a free email API service designed for developers, providing easy email sending capabilities." />
+  <meta property="twitter:image" content="https://ekilie.com/../assets/img/favicon.jpeg" />
 
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:title" content="ekiliRelay - Free Email API">
-  <meta property="twitter:description" content="ekiliRelay is a free email API service designed for developers, providing easy email sending capabilities.">
-  <meta property="twitter:image" content="https://ekilie.com/../assets/img/favicon.jpeg">
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords"
+    content="email API, free email API, developer tools, email sending service, ekiliRelay, email API service,ekili, ekilie, free email" />
 
-  <meta name="robots" content="index, follow">
-  <meta name="keywords" content="email API, free email API, developer tools, email sending service, ekiliRelay, email API service,ekili, ekilie, free email">
+  <meta name="author" content="Tachera Sasi" />
 
-  <meta name="author" content="Tachera Sasi">
+  <link rel="canonical" href="https://relay.ekilie.com" />
 
-  <link rel="canonical" href="https://relay.ekilie.com">
+  <link rel="icon" href="https://relay.ekilie.com/img/ekilirelay.jpeg" type="image/x-icon" />
 
-  <link rel="icon" href="https://relay.ekilie.com/img/ekilirelay.jpeg" type="image/x-icon">
+  <link rel="apple-touch-icon" href="https://relay.ekilie.com/img/ekilirelay.jpeg" />
 
-  <link rel="apple-touch-icon" href="https://relay.ekilie.com/img/ekilirelay.jpeg">
+  <link rel="manifest" href="manifest.json" />
 
-  <link rel="manifest" href="manifest.json">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+  <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+  <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet" />
 
-  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
-  <link href="../assets/css/style.css" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
   <!-- <link href="https://sense.ekilie.com/console/../assets/css/style.css" rel="stylesheet"> -->
 
   <style>
-    .header, .footer {
+    .header,
+    .footer {
       background-color: var(--card-bg-color);
     }
 
@@ -121,22 +131,29 @@
         <span class="d-none d-lg-block">ekiliRelay Docs</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+    </div>
+    <!-- End Logo -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <li>
-            <a href="https://www.producthunt.com/posts/ekilirelay?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-ekilirelay" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=481838&theme=dark" alt="ekiliRelay - Completely&#0032;Free&#0032;Email&#0032;API&#0032; | Product Hunt" style="width: 250px; height: 40px;" width="250" height="54" /></a>
+          <a href="https://www.producthunt.com/posts/ekilirelay?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-ekilirelay"
+            target="_blank"><img
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=481838&theme=dark"
+              alt="ekiliRelay - Completely&#0032;Free&#0032;Email&#0032;API&#0032; | Product Hunt"
+              style="width: 250px; height: 40px" width="250" height="54" /></a>
         </li>
-        
+
         <li class="nav-item">
-          <button style="border: none;margin-right:1rem" class="btn-new" id="shareBtn">
+          <button style="border: none; margin-right: 1rem" class="btn-new" id="shareBtn">
             <i class="bi bi-share"></i> Share
           </button>
         </li>
       </ul>
-    </nav><!-- End Icons Navigation -->
-  </header><!-- End Header -->
+    </nav>
+    <!-- End Icons Navigation -->
+  </header>
+  <!-- End Header -->
 
   <!-- Sidebar -->
   <aside id="sidebar" class="sidebar">
@@ -171,14 +188,15 @@
           <span>Contact</span>
         </a>
       </li>
-      
     </ul>
-  </aside><!-- End Sidebar-->
+  </aside>
+  <!-- End Sidebar-->
 
   <main id="main" class="main">
     <div class="pagetitle">
       <h1>Documentation</h1>
-    </div><!-- End Page Title -->
+    </div>
+    <!-- End Page Title -->
 
     <section class="section dashboard">
       <div class="row">
@@ -188,60 +206,68 @@
             <!-- Installation -->
             <div class="" id="installation">
               <div class="card info-card customers-card">
-                <div class="card-body">
-                  <h5 class="card-title">Installation <span>| JS</span></h5>
-                  <p>To get started with ekiliRelay, download the SDK as a zip file and include it in your project.</p>
-                  <ol>
-                    <li>Download the SDK from the button below:
-                      <div class="btn-new">
-                        <i class="bi bi-file-arrow-down"></i>
-                        <span><a href="https://relay.ekilie.com/sdk/ekilirelay-js-ts.v.1.0.zip" download>Download SDK</a></span>
-                      </div>
-                    </li>
-                    <li>Get your api key <a href="../console/">api key</a></li>
-                    <li>Unzip the downloaded file.</li>
-                    <li>Import the SDK in your project </li>
-                  </ol>
-                  <pre><code>import EkiliRelay from '../path-to/sdk/js/ekiliRelay.js';</code></pre>
-                </div>
+                  <div class="card-body">
+                      <h5 class="card-title">Installation <span>| JS</span></h5>
+                      <p>
+                          To get started with ekiliRelay, use npm to install and include it in your project.
+                      </p>
+                      <ol>
+                          <li>Install the mailer using npm:</li>
+                          <pre>
+<code class="language-javascript">npm i ekilirelay</code></pre>
+                          <li>Import the mailer into your project:</li>
+<pre><code class="language-javascript">import EkiliRelay from 'ekilirelay';</code></pre>
+                      </ol>
+                  </div>
               </div>
-            </div><!-- End Installation -->
+            </div>
+            <!-- End Installation -->
 
             <!-- Usage -->
             <div class="" id="usage">
               <div class="card info-card customers-card">
-                <div class="card-body">
-                  <h5 class="card-title">Usage <span>| JS/TS</span></h5>
-                  <p>After including the SDK, you can start using ekiliRelay 
-                    to send emails. Here's a quick example:
-                    <br>(This apply for both javascript and typescript)</p>
-                  <pre><code>&lt;script type="module"&gt;
+                  <div class="card-body">
+                      <h5 class="card-title">Usage <span>| JS/TS</span></h5>
+                      <p>
+                          After including the mailer, you can start using ekiliRelay to send emails. Here's a quick example:
+                      </p>
+<pre><code class="language-javascript">//Simple js implementation
 const sendBtn = document.getElementById("send"); //some button
-import EkiliRelay from '../path-to/sdk/js/ekiliRelay.js'; //importing EkiliRelay
+import EkiliRelay from 'ekilirelay'; //importing EkiliRelay
 
-// Initialize the SDK  
-const sdk = new EkiliRelay('your-api-key');//your-api-key goes here
+// Initialize the mailer  
+const mailer = new EkiliRelay('your-api-key'); //your-api-key goes here
 
-sendBtn.addEventListener("click", () => {//listening to a click event
-  // Send an email
-  sdk.sendEmail('email@example.com', 'Test Subject', 'This is a test message.', 'From: some-email@example.com')
-    .then(response => {
-      if (response.status === 'success') {
-        console.log('Email sent successfully.');
-      } else {
-        console.log('Failed to send email: ' + response.message);
-        console.log(response);
-      }
-    })
-    .catch(error => {
-      console.log('Error:', error);
-    });
+sendBtn.addEventListener("click", () => {
+// Send an email
+mailer.sendEmail(
+    'receiver-email@example.com', 
+    'Test Subject', 
+    'This is a test message.', 
+    'From: senderName &lt;sender-email@example.com&gt;')
+  .then(response => {
+    if (response.status === 'success') {
+      console.log('Email sent successfully.');
+    } else {
+      console.log('Failed to send email: ' + response.message);
+      console.log(response);
+    }
+  })
+  .catch(error => {
+    console.log('Error:', error);
+  });
 });
-&lt;/script&gt;</code></pre>
-                  <p>This simple example demonstrates how to initialize the ekiliRelay SDK and send an email in js/ts</p>
-                </div>
+</code></pre>
+                      <p>This simple example demonstrates how to initialize the ekiliRelay mailer and send an email using JavaScript or TypeScript.</p>
+                  </div>
               </div>
-            </div><!-- End Usage -->
+            </div>
+            <!-- End Usage -->
+
+            <script>
+              Prism.highlightAll();
+            </script>
+
 
             <!-- FAQ -->
             <div class="" id="faq">
@@ -250,7 +276,10 @@ sendBtn.addEventListener("click", () => {//listening to a click event
                   <h5 class="card-title">FAQ <span>| JS/TS</span></h5>
                   <div class="faq-item">
                     <h5>How do I get started with ekiliRelay?</h5>
-                    <p>Simply download the SDK, include it in your project, and follow the usage instructions.</p>
+                    <p>
+                      Simply download the mailer, include it in your project, and
+                      follow the usage instructions.
+                    </p>
                   </div>
                   <div class="faq-item">
                     <h5>Is ekiliRelay really free?</h5>
@@ -258,58 +287,89 @@ sendBtn.addEventListener("click", () => {//listening to a click event
                   </div>
                   <div class="faq-item">
                     <h5>Can I customize the email template?</h5>
-                    <p>Yes, you can customize the email body as per your requirements using HTML and CSS.</p>
+                    <p>
+                      Yes, you can customize the email body as per your
+                      requirements using HTML and CSS.
+                    </p>
                   </div>
                 </div>
               </div>
-            </div><!-- End FAQ -->
+            </div>
+            <!-- End FAQ -->
 
             <!-- Contact -->
             <div class="" id="contact">
               <div class="card info-card customers-card">
                 <div class="card-body">
                   <h5 class="card-title">Contact <span>| JS</span></h5>
-                  <p>If you have any questions or need further assistance, please reach out to us:</p>
+                  <p>
+                    If you have any questions or need further assistance,
+                    please reach out to us:
+                  </p>
                   <ul>
                     <li>Email: support@ekilie.com</li>
-                    <li>Visit: <a href="https://ekilie.com/" target="_blank">ekilie.com</a></li>
-                    <li>Creator: <a href="https://tachera.com/" target="_blank">Tachera W</a></li>
-                    <li>GitHub: <a href="https://github.com/tacheraSasi" target="_blank">github.com/tacheraSasi</a></li>
+                    <li>
+                      Visit:
+                      <a href="https://ekilie.com/" target="_blank">ekilie.com</a>
+                    </li>
+                    <li>
+                      Creator:
+                      <a href="https://tachera.com/" target="_blank">Tachera W</a>
+                    </li>
+                    <li>
+                      GitHub:
+                      <a href="https://github.com/tacheraSasi" target="_blank">github.com/tacheraSasi</a>
+                    </li>
                   </ul>
-                  <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="xjwsJBTYFD" data-color="#8ff0a4" data-emoji="🙂"  data-font="Inter" data-text="Support ekiliRelay" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#FFDD00" ></script>
-                  <img src="https://relay.ekilie.com/img/bmc_qr.png" class="mt-4" 
-                  style="width: 300px;">
+                  <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+                    data-name="bmc-button" data-slug="xjwsJBTYFD" data-color="#8ff0a4" data-emoji="🙂" data-font="Inter"
+                    data-text="Support ekiliRelay" data-outline-color="#000000" data-font-color="#000000"
+                    data-coffee-color="#FFDD00"></script>
+                  <img src="https://relay.ekilie.com/img/bmc_qr.png" class="mt-4" style="width: 300px" />
                 </div>
               </div>
-            </div><!-- End Contact -->
+            </div>
+            <!-- End Contact -->
           </div>
-        </div><!-- End Left side columns -->
+        </div>
+        <!-- End Left side columns -->
         <div class="col-lg-4">
           <div class="alert alert-dark bg-dark border-0 text-light alert-dismissible fade show" role="alert">
-              <h4 class="alert-heading"><i class="bi bi-envelope"></i> ekiliRelay </h4>
-              <p>📧 Send emails effortlessly with our free email API. Reliable, fast, and secure.</p>
-              <hr style="background-color: var(--border-color);">
-              <p class="mb-0">🚀 Simplify email communication for your app with ekiliRelay!</p>
-              <button type="button" class="btn-close text-light" data-bs-dismiss="alert" aria-label="Close"></button>
+            <h4 class="alert-heading">
+              <i class="bi bi-envelope"></i> ekiliRelay
+            </h4>
+            <p>
+              📧 Send emails effortlessly with our free email API. Reliable,
+              fast, and secure.
+            </p>
+            <hr style="background-color: var(--border-color)" />
+            <p class="mb-0">
+              🚀 Simplify email communication for your app with ekiliRelay!
+            </p>
+            <button type="button" class="btn-close text-light" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
-      </div>
+        </div>
       </div>
     </section>
-  </main><!-- End #main -->
+  </main>
+  <!-- End #main -->
 
   <!-- Footer -->
   <footer id="footer" class="footer">
     <div class="copyright">
       &copy; Copyright <strong><span>ekiliRelay</span></strong>. All Rights Reserved
     </div>
-    <div class="credits">
-      From <a href="https://ekilie.com">ekilie</a>
-    </div>
-  </footer><!-- End Footer -->
+    <div class="credits">From <a href="https://ekilie.com">ekilie</a></div>
+  </footer>
+  <!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  
-  <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="xjwsJBTYFD" data-description="Support me on Buy me a coffee!" data-message="Love ekiliRelay? Help keep it free and growing by buying me a coffee! ☕" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+    data-id="xjwsJBTYFD" data-description="Support me on Buy me a coffee!"
+    data-message="Love ekiliRelay? Help keep it free and growing by buying me a coffee! ☕" data-color="#40DCA5"
+    data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
   <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -321,21 +381,24 @@ sendBtn.addEventListener("click", () => {//listening to a click event
   <script src="../assets/vendor/php-email-form/validate.js"></script>
   <script src="../assets/js/main.js"></script>
   <script>
-    document.getElementById('shareBtn').addEventListener('click', () => {
+    document.getElementById("shareBtn").addEventListener("click", () => {
       if (navigator.share) {
-        navigator.share({
-          title: 'ekiliRelay Documentation',
-          text: 'Check out the ekiliRelay Documentation',
-          url: window.location.href,
-        }).then(() => {
-          console.log('Thanks for sharing!');
-          alert('Thanks for sharing!');
-        }).catch(err => {
-          console.error('Error sharing:', err);
-        });
+        navigator
+          .share({
+            title: "ekiliRelay Documentation",
+            text: "Check out the ekiliRelay Documentation",
+            url: window.location.href,
+          })
+          .then(() => {
+            console.log("Thanks for sharing!");
+            alert("Thanks for sharing!");
+          })
+          .catch((err) => {
+            console.error("Error sharing:", err);
+          });
       } else {
         // Fallback for browsers that don't support the Web Share API
-        alert('Web Share API not supported in this browser.');
+        alert("Web Share API not supported in this browser.");
       }
     });
   </script>
