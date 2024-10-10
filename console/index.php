@@ -219,9 +219,9 @@
     <section class="section dashboard">
       <div class="row">
         <!-- Left side columns -->
-        <div class="col-lg-12">
+        <div class="col-lg-8">
           <div class="row">
-          <div class="col-xxl-4 col-md-6">
+          <div class="">
               <div class="card info-card sales-card" style="border-radius: 1rem;">
 
                 <div class="card-body">
@@ -242,7 +242,7 @@
             </div><!-- -->
 
             <!--  -->
-            <div class="col-xxl-4 col-md-6">
+            <div class="">
               <div class="card info-card revenue-card">
 
                 
@@ -330,6 +330,17 @@
             </div><!-- End Contact -->
           </div>
         </div><!-- End Left side columns -->
+
+        <div class="col-lg-4">
+          <div class="alert alert-dark bg-dark border-0 text-light alert-dismissible fade show" role="alert">
+              <h4 class="alert-heading"><i class="bi bi-envelope"></i> ekiliRelay </h4>
+              <p>📧 Send emails effortlessly with our free email API. Reliable, fast, and secure.</p>
+              <hr style="background-color: var(--border-color);">
+              <p class="mb-0">🚀 Simplify email communication for your app with ekiliRelay!</p>
+              <button type="button" class="btn-close text-light" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      </div>
+
       </div>
     </section>
   </main><!-- End #main -->
