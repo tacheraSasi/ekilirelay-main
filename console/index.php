@@ -189,7 +189,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="https://relay.ekilie.com">
+        <a class="nav-link collapsed" href="https://relay.ekilie.com/docs" target="blank">
           <i class="bi bi-file-arrow-down"></i>
           <span>Documentation</span>
         </a>
