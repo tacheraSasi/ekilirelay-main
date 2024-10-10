@@ -221,7 +221,7 @@
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
-          <div class="">
+          <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card" style="border-radius: 1rem;">
 
                 <div class="card-body">
@@ -242,7 +242,7 @@
             </div><!-- -->
 
             <!--  -->
-            <div class="">
+            <div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
 
                 
@@ -264,7 +264,7 @@
 
               </div>
             </div><!-- End -->
-            <div class="col-xxl-4 col-xl-12" id="apikey">
+            <div class="" id="apikey">
               <div class="card info-card customers-card">
                 <div class="card-body">
                   <h5 class="card-title">Habari, <?=$username?></h5>
@@ -311,7 +311,7 @@
             </div>
 
             <!-- Contact -->
-            <div class="col-xxl-4 col-xl-12" id="contact">
+            <div class="" id="contact">
               <div class="card info-card customers-card">
                 <div class="card-body">
                   <h5 class="card-title">Contact <span></span></h5>
