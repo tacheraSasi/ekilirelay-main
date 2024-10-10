@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $headers = "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
             $headers .= isset($data['headers']) ? $data['headers'] : "From: $user_name <$user_email>";
-            echo json_encode($headers);  # For debugging purposes
+            // echo json_encode($headers);  # For debugging purposes
 
             # Validating the recipient's email address
             # I use the validateEmail function to ensure the 'to' email is in proper format
