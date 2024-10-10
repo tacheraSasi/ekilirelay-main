@@ -36,9 +36,9 @@
 
   <link rel="canonical" href="https://relay.ekilie.com">
 
-  <link rel="icon" href="https://relay.ekilie.com/img/ekilirelay.jpeg" type="image/x-icon">
+  <link rel="icon" href="https://relay.ekilie.com/img/favicon.png" type="image/x-icon">
 
-  <link rel="apple-touch-icon" href="https://relay.ekilie.com/img/ekilirelay.jpeg">
+  <link rel="apple-touch-icon" href="https://relay.ekilie.com/img/favicon.png">
 
   <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
