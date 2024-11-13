@@ -1,11 +1,9 @@
 <?php
-# Including the configuration file for the database connection
-# In this part, I'm pulling in the database configuration to establish a connection
 include_once '../config.php';
 include_once "configurations.php";
 
 # Allowing cross-origin requests (CORS)
-# I set headers to allow any domain to access this API, which is helpful for public APIs
+# Headers to allow any domain to access this API, which is helpful for public APIs
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
@@ -29,14 +27,12 @@ function validateEmail($email)
 }
 
 # Function for logging messages to a file
-# I use this function to append logs to a file for debugging or tracking purposes
 function logMessage($message)
 {
     file_put_contents('../logs/email.log', $message . PHP_EOL, FILE_APPEND);
 }
 
 # Checking if the request method is POST
-# I want to make sure this block only runs for POST requests, as this is how I'll receive data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     # Decoding the incoming JSON payload into an associative array
@@ -101,7 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // echo json_encode($headers);  # For debugging purposes
 
             # Validating the recipient's email address
-            # I use the validateEmail function to ensure the 'to' email is in proper format
             if (!validateEmail($to)) {
                 $response = ['status' => 'error', 'message' => 'Invalid email address.'];
                 echo json_encode($response);
@@ -110,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             # Attempting to send the email
-            # Here, I try sending the email with the provided data and headers
             if (mail($to, $subject, $message, $headers)) {
                 # If the email is sent, I update the emails_sent count
                 $select_num_sent = mysqli_query($conn, "SELECT emails_sent FROM data WHERE user = '$user_id'");
