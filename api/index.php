@@ -29,7 +29,7 @@ function validateEmail($email)
 # Function for logging messages to a file
 function logMessage($message)
 {
-    file_put_contents('../logs/email.log', $message . PHP_EOL, FILE_APPEND);
+    // file_put_contents('../logs/email.log', $message . PHP_EOL, FILE_APPEND);
 }
 
 # Checking if the request method is POST
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             # These fields come from the incoming POST request
             $to = $data['to'];
             $subject = $data['subject'];
-            $message = $data['message'];
+            $message = defaultTemplate($data['message']);#Using the default template
 
             # Adding the necessary email headers
             $headers = "MIME-Version: 1.0" . "\r\n";

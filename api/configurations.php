@@ -8,7 +8,7 @@ function defaultTemplate(string $message):string{
             <pre style="font-family: inherit;">
                 '.$message.'
             </pre>
-            <small style="opacity: .7;">Sent with <a href="http://relay.ekilie.com" style="color:rgb(4, 189, 96)">ekiliRelay</a></small>
+            <small style="opacity: .7;">Sent with <a href="http://relay.ekilie.com" target="_blank" style="color:rgb(4, 189, 96)">ekiliRelay</a></small>
         </body>
         </html>
     ';
