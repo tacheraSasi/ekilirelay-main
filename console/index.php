@@ -164,13 +164,18 @@
             </li>
 
             
-
-            <!-- <li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="logout.php?ref=<?=$school_uid?>">
+                <i class="bi bi-gear"></i>
+                <span>Settings</span>
+              </a>
+            </li>
+            <li>
               <a class="dropdown-item d-flex align-items-center" href="logout.php?ref=<?=$school_uid?>">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
-            </li> -->
+            </li>
 
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
