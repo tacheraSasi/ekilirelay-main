@@ -2,6 +2,7 @@
 # Including the configuration file for the database connection
 # In this part, I'm pulling in the database configuration to establish a connection
 include_once '../config.php';
+include_once "configurations.php";
 
 # Allowing cross-origin requests (CORS)
 # I set headers to allow any domain to access this API, which is helpful for public APIs
