@@ -1,6 +1,5 @@
 <?php 
 session_start();
-include_once "../../../config.php";
 
 // Checking if the login attempts counter is set in the session, initialize it to 0 if not.
 if (!isset($_SESSION['login_attempts'])) {
