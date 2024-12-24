@@ -16,7 +16,7 @@ if(!empty($email)){
     }
 } else {
     echo "Email is required";
-}
+})
 
 
 function generateOTP($email){
