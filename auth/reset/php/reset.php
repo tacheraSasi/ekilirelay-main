@@ -39,6 +39,4 @@ if (!empty($email)) {
     echo "Email is required";
 }
 
-function emailTemplate(){
-}
 ?>
