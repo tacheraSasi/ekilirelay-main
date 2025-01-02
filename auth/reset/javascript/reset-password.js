@@ -20,7 +20,7 @@ continueBtn.onclick = ()=>{
                 redirectContainer.style.display = "block";
                 setTimeout(()=>{
                   location.href = "../../console";
-                },2500)
+                },3000)
               }else{
                 errorText.style.display = "block";
                 errorText.textContent = data;

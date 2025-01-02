@@ -10,8 +10,12 @@ $newPassword = mysqli_real_escape_string($conn, $_POST["new-password"]);
 $cpassword = mysqli_real_escape_string($conn, $_POST["cpassword"]);
 
 if (!empty($email) && !empty($otp) && !empty($newPassword) && !empty($cpassword)) {
+    if ($newPassword !== $cpassword) {
+        echo "Passwords do not match";
+        exit();
+    }
     $hashedPass = Utils::hashPassword($newPassword);
-    $sql = mysqli_query($conn, "UPDATE users SET password = '{$hashedPass}' WHERE email = '{$email}'");
+    $sql = mysqli_query($conn, "UPDATE users SET auth = '{$hashedPass}' WHERE email = '{$email}'");
     
     if($sql){
         echo "success";
