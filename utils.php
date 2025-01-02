@@ -33,13 +33,11 @@ class Utils
         $subject = "ERROR ekiliRelay";
         $time = date("Y-m-d H:i:s");
         $message = "An error occurred at $location on $time with the message: $msg";
-        $headers = "From: ERROR_ekiliRelay <support@ekilie.com>";
+        $headers = "From: ERROR_ekiliRelay <errors@ekilie.com>";
         mail($email, $subject, $message, $headers);
     }
-    
-    
     public static function passwordResetEmailTemplate($otp, $email, $username) {
-        $resetUrl = 'https://www.ekilie.com/reset-password?otp=' . urlencode($otp) . '&email=' . urlencode($email);
+        $resetUrl = 'https://relay.ekilie.com/auth/reset/reset-password.php?otp=' . urlencode($otp) . '&email=' . urlencode($email);
         $html = '
         <!DOCTYPE html>
         <html lang="en">
@@ -97,9 +95,8 @@ class Utils
                 <div class="content">
                     <p>Hi ' . htmlspecialchars($username) . ',</p>
                     <p>We received a request to reset your password for your account associated with ' . htmlspecialchars($email) . '.</p>
-                    <p>Your OTP (One-Time Password) for resetting your password is:</p>
-                    <h2>' . htmlspecialchars($otp) . '</h2>
-                    <p>Please use this OTP to reset your password. If you did not request a password reset, please ignore this email.</p>
+                    
+                    <p>Please use The button below to reset your password. If you did not request a password reset, please ignore this email.</p>
                     <p>Thank you,</p>
                     <p>The ekiliRelay Team</p>
                     <a href="' . $resetUrl . '" class="button">Reset Password</a>

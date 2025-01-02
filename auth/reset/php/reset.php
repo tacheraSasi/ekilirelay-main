@@ -26,7 +26,7 @@ if (!empty($email)) {
             mail(
                 $email,
                 "Password Reset -> ekiliRelay",
-                "Your OTP is $otp",
+                Utils::passwordResetEmailTemplate($otp, $email, $row["name"]),
                 "From:ekiliRelay <support@ekilie.com>"
             )
         ) {
