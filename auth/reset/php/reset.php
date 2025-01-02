@@ -2,6 +2,7 @@
 session_start();
 require "../../../vendor/autoload.php";
 require "../../../config.php";
+require "../../../utils.php";
 
 $email = mysqli_real_escape_string($conn, $_POST["email"]);
 
@@ -11,9 +12,13 @@ if (!empty($email)) {
     if (mysqli_num_rows($sql) > 0) {
         $row = mysqli_fetch_assoc($sql);
 
-        $otp = generateOTP($conn, $email);
+        $otp = Utils::generateOTP($conn, $email);
         if ($otp == "exists") {
             echo "Check you emails for the reset password link";
+        }else if($otp == "failed"){
+            Utils::logErrors("Something went wrong. Please try again later", "reset.php");
+            echo "Something went wrong. Please try again later";
+            //Add in a way to log errors
         }
         // Sending the OTP to the user's email for password reset logic
 
@@ -32,30 +37,6 @@ if (!empty($email)) {
     }
 } else {
     echo "Email is required";
-}
-
-function generateOTP($conn, $email){
-    #checking if the email already has an OTP
-    $sql = mysqli_query($conn, "SELECT * FROM otp WHERE email = '{$email}'");
-    if (mysqli_num_rows($sql) > 0) {
-        // $row = mysqli_fetch_assoc($sql);
-        return "exists";
-    } // Also delete the previous OTP if it has expires
-
-    $prefix = "otp_";
-    $length = 10 - strlen($prefix);
-    $otp = $prefix . bin2hex(random_bytes($length / 2));
-    $currentTimestamp = time();
-    $expires = strtotime("+7 days", $currentTimestamp);
-    $readableDate = date("Y-m-d H:i:s", $expires);
-    $sql = "INSERT INTO otp (email,value,expires_at) VALUES ('$email','$otp',$expires)";
-
-    if (mysqli_query($conn, $sql)) {
-        return $otp;
-    } else {
-        echo "Something went wrong. Please try again later";
-        return $otp;
-    }
 }
 
 function emailTemplate(){
