@@ -256,7 +256,7 @@ if(isset($_GET['otp']) && isset($_GET['email'])){
                 border-radius: 1.5rem;
             }
             .redirect-container{
-              /* display: none; */
+              display: none;
               background-color: #20613be7;
               border:1px solid #33995d;
               border-radius:8px;
@@ -327,8 +327,6 @@ if(isset($_GET['otp']) && isset($_GET['email'])){
                         method="POST"
                         enctype="multipart/form-data"
                         autocomplete="off"
-                        style="display:none"
-                        <!-- class="d-none" -->
                     >
                         <div
                             class="error-text"

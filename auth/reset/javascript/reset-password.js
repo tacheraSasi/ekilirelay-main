@@ -1,6 +1,8 @@
 const form = document.querySelector(".reset form"),
 continueBtn = form.querySelector(".button button"),
 errorText = form.querySelector(".error-text");
+const redirectContainer = document.querySelector('.redirect-container')
+
 
 form.onsubmit = (e)=>{
     e.preventDefault();
@@ -14,7 +16,11 @@ continueBtn.onclick = ()=>{
           if(xhr.status === 200){
               let data = xhr.response;
               if(data === "success"){
-                location.href = "../../console";
+                form.style.display = "none";
+                redirectContainer.style.display = "block";
+                setTimeout(()=>{
+                  location.href = "../../console";
+                },2500)
               }else{
                 errorText.style.display = "block";
                 errorText.textContent = data;
