@@ -227,29 +227,32 @@
               </div>
             </div>
             <!-- End Installation -->
-
-            <!-- Usage -->
-            <div class="" id="usage">
+            <!-- Usage Documentation -->
+            <div id="usage">
               <div class="card info-card customers-card">
-                  <div class="card-body">
-                      <h5 class="card-title">Usage <span>| JS/TS</span></h5>
-                      <p>
-                          After including the mailer, you can start using ekiliRelay to send emails. Here's a quick example:
-                      </p>
-<pre><code class="language-javascript">//Simple js implementation
-const sendBtn = document.getElementById("send"); //some button
-import EkiliRelay from 'ekilirelay'; //importing EkiliRelay
+                <div class="card-body">
+                  <h5 class="card-title">Usage <span>| JS/TS</span></h5>
+                  <p>
+                    After including the mailer, you can start using EkiliRelay to send emails. Here's a quick example for different frameworks and libraries:
+                  </p>
+            
+                  <!-- Vanilla JavaScript Example -->
+                  <h6>Vanilla JavaScript</h6>
+                  <pre><code class="language-javascript">// Simple JS implementation
+const sendBtn = document.getElementById("send"); // some button
+import EkiliRelay from 'ekilirelay'; // importing EkiliRelay
 
 // Initialize the mailer  
-const mailer = new EkiliRelay('your-api-key'); //your-api-key goes here
+const mailer = new EkiliRelay('your-api-key'); // your-api-key goes here
 
 sendBtn.addEventListener("click", () => {
-// Send an email
-mailer.sendEmail(
+  // Send an email
+  mailer.sendEmail(
     'receiver-email@example.com', 
     'Test Subject', 
     'This is a test message.', 
-    'From: senderName &lt;sender-email@example.com&gt;')
+    'From: senderName &lt;sender-email@example.com&gt;'
+  )
   .then(response => {
     if (response.status === 'success') {
       console.log('Email sent successfully.');
@@ -262,12 +265,87 @@ mailer.sendEmail(
     console.log('Error:', error);
   });
 });
-</code></pre>
-                      <p>This simple example demonstrates how to initialize the ekiliRelay mailer and send an email using JavaScript or TypeScript.</p>
-                  </div>
+            </code></pre>
+            
+                  <!-- React.js Example -->
+                  <h6>React.js</h6>
+                  <pre><code class="language-javascript">import React from 'react';
+import EkiliRelay from 'ekilirelay';
+
+const mailer = new EkiliRelay('your-api-key');
+
+function App() {
+  const sendEmail = () => {
+    mailer.sendEmail(
+      'receiver-email@example.com', 
+      'Test Subject', 
+      'This is a test message.', 
+      'From: senderName &lt;sender-email@example.com&gt;'
+    )
+    .then(response => {
+      if (response.status === 'success') {
+        console.log('Email sent successfully.');
+      } else {
+        console.log('Failed to send email: ' + response.message);
+        console.log(response);
+      }
+    })
+    .catch(error => {
+      console.log('Error:', error);
+    });
+  };
+
+  return (
+    {/** Your ui **/}
+  );
+}
+
+export default App;
+            </code></pre>
+            
+                  <!-- Next.js Example -->
+                  <h6>Next.js</h6>
+                  <pre><code class="language-javascript">import EkiliRelay from 'ekilirelay';
+            
+export default function Home() {
+  const mailer = new EkiliRelay(process.env.NEXT_PUBLIC_RELAY_API);
+
+  const sendEmail = () => {
+    mailer.sendEmail(
+      'receiver-email@example.com', 
+      'Test Subject', 
+      'This is a test message.', 
+      'From: senderName &lt;sender-email@example.com&gt;'
+    )
+    .then(response => {
+      if (response.status === 'success') {
+        console.log('Email sent successfully.');
+      } else {
+        console.log('Failed to send email: ' + response.message);
+        console.log(response);
+      }
+    })
+    .catch(error => {
+      console.log('Error:', error);
+    });
+  };
+
+  return (
+    {/** Your ui **/}
+  );
+}
+            </code></pre>
+            
+                  
+            
+                  <p>
+                    These examples demonstrate how to initialize the EkiliRelay mailer and send an email using various JavaScript frameworks.
+                  </p>
+                </div>
               </div>
             </div>
-            <!-- End Usage -->
+            <!-- End Usage Documentation -->
+
 
             <script>
               Prism.highlightAll();

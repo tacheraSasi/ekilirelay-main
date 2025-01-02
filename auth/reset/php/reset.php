@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../../../vendor/autoload.php";
-include_once "../../../config.php";
+require "../../../config.php";
 
 $email = mysqli_real_escape_string($conn, $_POST["email"]);
 
