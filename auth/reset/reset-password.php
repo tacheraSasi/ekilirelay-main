@@ -1,9 +1,16 @@
 <?php
+include("../../config.php");
 $otp = "";
 $email = "";
 if(isset($_GET['otp']) && isset($_GET['email'])){
     $otp = $_GET['otp'];
     $email = $_GET['email'];
+    //checking if otp is valid
+    $q = mysqli_query($conn, "SELECT * FROM otp WHERE email = '{$email}' AND value = '{$otp}'");
+    if(mysqli_num_rows($q) == 0){
+        header("Location: ../");
+        exit();
+    }
 }else{
     header("Location: ../");
     exit();
@@ -258,7 +265,7 @@ if(isset($_GET['otp']) && isset($_GET['email'])){
                         <div style="display: flex; justify-content: flex-start">
                             <div class="logo-container">
                                 <img
-                                    src="../../assets/img/favicon.jpeg"
+                                    src="https://relay.ekilie.com/img/favicon.png"
                                     alt=""
                                     class="logo"
                                 />
@@ -275,9 +282,7 @@ if(isset($_GET['otp']) && isset($_GET['email'])){
                 </div>
                 <div class="right">
                     <h1>Reset password</h1>
-                    <p class="sub-heading">
-                        Enter your ekiliRelay email address
-                    </p>
+                    
                     <form
                         action="#"
                         method="POST"
@@ -297,8 +302,8 @@ if(isset($_GET['otp']) && isset($_GET['email'])){
                         <div class="field input">
                             <input
                                 style="width: 100%"
-                                type="text"
-                                name="password"
+                                type="password"
+                                name="new-password"
                                 placeholder="Your new password"
                                 required
                             />
@@ -306,9 +311,9 @@ if(isset($_GET['otp']) && isset($_GET['email'])){
                         <div class="field input">
                             <input
                                 style="width: 100%"
-                                type="text"
-                                name="password"
-                                placeholder="Confirm Password"
+                                type="Password"
+                                name="cpassword"
+                                placeholder="Confirm new Password"
                                 required
                             />
                         </div>
@@ -329,24 +334,24 @@ if(isset($_GET['otp']) && isset($_GET['email'])){
             document.addEventListener("DOMContentLoaded", function () {
                 const typingTextElement = document.getElementById("typingText");
                 const originalText =
-                    "As you delve into ekilirelay's diverse features";
+                    "Hold onto your hats! You're about to explore the whimsical world of ekilirelay's features!";
                 let currentIndex = 0;
-
+        
                 function typingAnimation() {
                     typingTextElement.textContent = originalText.substring(
                         0,
-                        currentIndex,
+                        currentIndex
                     );
                     currentIndex++;
-
+        
                     if (currentIndex <= originalText.length) {
                         setTimeout(typingAnimation, 150);
                     }
                 }
-
+        
                 typingAnimation();
             });
         </script>
-        <script src="javascript/reset.js"></script>
+        <script src="javascript/reset-password.js"></script>
     </body>
 </html>

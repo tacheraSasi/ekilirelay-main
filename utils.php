@@ -110,4 +110,9 @@ class Utils
         ';
         return $html;
     }
+    
+    public function HashPassword($password): string
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
 }
