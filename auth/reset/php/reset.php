@@ -37,12 +37,14 @@ function generateOTP($conn, $email){
     if (mysqli_num_rows($sql) > 0) {
         $row = mysqli_fetch_assoc($sql);
         return "Check you emails for the reset password link";
-    }
+    }// Also delete the previous OTP if it has expires
+    
     $prefix = "otp_";
     $length = 10 - strlen($prefix);
     $otp = $prefix . bin2hex(random_bytes($length / 2));
-    $expires = strtotime("+2 days",time());
-    $sql = "INSERT INTO otp (email,value) VALUES ('$email','$otp')";
+    $expires = strtotime("+7 days",time());
+    $sql = "INSERT INTO otp (email,value,expires_at) VALUES ('$email','$otp',$expires)";
+    
     if (mysqli_query($conn, $sql)) {
         return $otp;
     } else {
