@@ -285,8 +285,17 @@
                             <input
                                 style="width: 100%"
                                 type="text"
-                                name="email"
-                                placeholder="Your email"
+                                name="password"
+                                placeholder="Your new password"
+                                required
+                            />
+                        </div>
+                        <div class="field input">
+                            <input
+                                style="width: 100%"
+                                type="text"
+                                name="password"
+                                placeholder="Confirm Password"
                                 required
                             />
                         </div>
@@ -294,15 +303,7 @@
                         <div class="input-container field button">
                             <button id="submit" type="submit">Reset</button>
                         </div>
-                        <div class="link" style="color: lightgrey">
-                            Haven't joined ekiliRelay yet?
-                            <a
-                                href="../signup"
-                                style="color: #33995d; text-decoration: none"
-                            >
-                                Join
-                            </a>
-                        </div>
+                        
                     </form>
                 </div>
             </div>
