@@ -22,14 +22,13 @@
   <meta property="og:title" content="ekiliRelay - Free Email API" />
   <meta property="og:description"
     content="ekiliRelay is a free email API service designed for developers, providing easy email sending capabilities." />
-  <meta property="og:url" content="https://relay.ekilie.com" />
-  <meta property="og:image" content="https://ekilie.com/../assets/img/favicon.jpeg" />
+
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:title" content="ekiliRelay - Free Email API" />
   <meta property="twitter:description"
     content="ekiliRelay is a free email API service designed for developers, providing easy email sending capabilities." />
-  <meta property="twitter:image" content="https://ekilie.com/../assets/img/favicon.jpeg" />
+  <meta property="twitter:image" content="https://relay.ekilie.com/img/favicon.png" />
 
   <meta name="robots" content="index, follow" />
   <meta name="keywords"
@@ -217,12 +216,12 @@
 <code class="language-javascript">npm i ekilirelay</code></pre>
                           <li>Import the mailer into your project:</li>
 <pre><code class="language-javascript">import EkiliRelay from 'ekilirelay';</code></pre>
-                          <li> 
+                          <li>
                             Get you api key <a href="../console/">API KEY</a>
                           </li>
-                     
+
                       </ol>
-                      
+
                   </div>
               </div>
             </div>
@@ -235,22 +234,22 @@
                   <p>
                     After including the mailer, you can start using EkiliRelay to send emails. Here's a quick example for different frameworks and libraries:
                   </p>
-            
+
                   <!-- Vanilla JavaScript Example -->
                   <h6>Vanilla JavaScript</h6>
                   <pre><code class="language-javascript">// Simple JS implementation
 const sendBtn = document.getElementById("send"); // some button
 import EkiliRelay from 'ekilirelay'; // importing EkiliRelay
 
-// Initialize the mailer  
+// Initialize the mailer
 const mailer = new EkiliRelay('your-api-key'); // your-api-key goes here
 
 sendBtn.addEventListener("click", () => {
   // Send an email
   mailer.sendEmail(
-    'receiver-email@example.com', 
-    'Test Subject', 
-    'This is a test message.', 
+    'receiver-email@example.com',
+    'Test Subject',
+    'This is a test message.',
     'From: senderName &lt;sender-email@example.com&gt;'
   )
   .then(response => {
@@ -266,7 +265,7 @@ sendBtn.addEventListener("click", () => {
   });
 });
             </code></pre>
-            
+
                   <!-- React.js Example -->
                   <h6>React.js</h6>
                   <pre><code class="language-javascript">import React from 'react';
@@ -277,9 +276,9 @@ const mailer = new EkiliRelay('your-api-key');
 function App() {
   const sendEmail = () => {
     mailer.sendEmail(
-      'receiver-email@example.com', 
-      'Test Subject', 
-      'This is a test message.', 
+      'receiver-email@example.com',
+      'Test Subject',
+      'This is a test message.',
       'From: senderName &lt;sender-email@example.com&gt;'
     )
     .then(response => {
@@ -302,19 +301,19 @@ function App() {
 
 export default App;
             </code></pre>
-            
+
                   <!-- Next.js Example -->
                   <h6>Next.js</h6>
                   <pre><code class="language-javascript">import EkiliRelay from 'ekilirelay';
-            
+
 export default function Home() {
   const mailer = new EkiliRelay(process.env.NEXT_PUBLIC_RELAY_API);
 
   const sendEmail = () => {
     mailer.sendEmail(
-      'receiver-email@example.com', 
-      'Test Subject', 
-      'This is a test message.', 
+      'receiver-email@example.com',
+      'Test Subject',
+      'This is a test message.',
       'From: senderName &lt;sender-email@example.com&gt;'
     )
     .then(response => {
@@ -335,9 +334,9 @@ export default function Home() {
   );
 }
             </code></pre>
-            
-                  
-            
+
+
+
                   <p>
                     These examples demonstrate how to initialize the EkiliRelay mailer and send an email using various JavaScript frameworks.
                   </p>
@@ -397,7 +396,7 @@ export default function Home() {
                     </li>
                     <li>
                       Creator:
-                      <a href="https://tachera.com/" target="_blank">Tachera W</a>
+                      <a href="https://github.com/tacheraSasi" target="_blank">Tachera W</a>
                     </li>
                     <li>
                       GitHub:

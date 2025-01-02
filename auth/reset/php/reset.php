@@ -32,9 +32,16 @@ if (!empty($email)) {
 }
 
 function generateOTP($conn, $email){
-    $prefix = "ekilie-";
-    $length = 16 - strlen($prefix);
+    #checking if the email already has an OTP
+    $sql = mysqli_query($conn, "SELECT * FROM otp WHERE email = '{$email}'");
+    if (mysqli_num_rows($sql) > 0) {
+        $row = mysqli_fetch_assoc($sql);
+        return "Check you emails for the reset password link";
+    }
+    $prefix = "otp_";
+    $length = 10 - strlen($prefix);
     $otp = $prefix . bin2hex(random_bytes($length / 2));
+    $expires = strtotime("+2 days",time());
     $sql = "INSERT INTO otp (email,value) VALUES ('$email','$otp')";
     if (mysqli_query($conn, $sql)) {
         return $otp;
