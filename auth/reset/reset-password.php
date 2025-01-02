@@ -255,6 +255,45 @@ if(isset($_GET['otp']) && isset($_GET['email'])){
                 transition: all ease-in-out 0.7s;
                 border-radius: 1.5rem;
             }
+            .redirect-container{
+              /* display: none; */
+              background-color: #20613be7;
+              border:1px solid #33995d;
+              border-radius:8px;
+              margin-top: 1rem;
+              padding:1rem;
+            }
+            /* loader */
+            .main-loader-success{
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            
+            .loader-success {
+              border: 2px solid #f3f3f3;
+              border-radius: 50%;
+              border-top: 6px solid rgb(110, 110, 170);
+              border-right: 6px solid rgb(99, 146, 99);
+              border-bottom: 7px solid rgb(158, 71, 71);
+              border-left: 4px solid rgb(235, 112, 187);
+              width: 35px;
+              height: 35px;
+              -webkit-animation: spin 2s linear infinite;
+              animation: spin 2s linear infinite;
+            }
+            .loader-text{
+              margin:auto 3px;
+            }
+            @-webkit-keyframes spin {
+              0% { -webkit-transform: rotate(0deg); }
+              100% { -webkit-transform: rotate(360deg); }
+            }
+            
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
         </style>
     </head>
     <body>
@@ -288,7 +327,8 @@ if(isset($_GET['otp']) && isset($_GET['email'])){
                         method="POST"
                         enctype="multipart/form-data"
                         autocomplete="off"
-                        class="create-groove-form"
+                        style="display:none"
+                        <!-- class="d-none" -->
                     >
                         <div
                             class="error-text"
@@ -325,6 +365,17 @@ if(isset($_GET['otp']) && isset($_GET['email'])){
                         </div>
                         
                     </form>
+                    
+                    <div class="redirect-container">
+                      <p>You're being redirect to the Console</p>
+                      <div class='main-loader-success'>
+                        <div class='loader-success'></div> 
+                      </div>
+                      <div id="redirect" style="font-weight: bold;">
+                        Redirecting...
+                      </div>
+                    </div>
+           
                 </div>
             </div>
         </div>

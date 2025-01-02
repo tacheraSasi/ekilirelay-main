@@ -111,8 +111,13 @@ class Utils
         return $html;
     }
     
-    public function HashPassword($password): string
+    public function hashPassword($password): string
     {
-        return password_hash($password, PASSWORD_DEFAULT);
+        return md5($password);//TODO:will later change to a more secure hashing algorithm
+    }
+    
+    public function verifyPassword($password, $hash): bool
+    {
+        return md5($password) === $hash;
     }
 }
