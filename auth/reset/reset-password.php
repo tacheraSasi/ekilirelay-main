@@ -1,3 +1,16 @@
+<?php
+$otp = "";
+$email = "";
+if(isset($_GET['otp']) && isset($_GET['email'])){
+    $otp = $_GET['otp'];
+    $email = $_GET['email'];
+}else{
+    header("Location: ../");
+    exit();
+}
+?>
+
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -299,6 +312,8 @@
                                 required
                             />
                         </div>
+                        <input type="hidden" value="<?= $otp; ?>" name="otp" />
+                        <input type="hidden" value="<?= $email; ?>" name="email" />
 
                         <div class="input-container field button">
                             <button id="submit" type="submit">Reset</button>
