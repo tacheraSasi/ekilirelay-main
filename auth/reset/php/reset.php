@@ -21,13 +21,15 @@ if (!empty($email)) {
             //Add in a way to log errors
         }
         // Sending the OTP to the user's email for password reset logic
-
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= "From:ekiliRelay <support@ekilie.com>";
         if (
             mail(
                 $email,
                 "Password Reset -> ekiliRelay",
                 Utils::passwordResetEmailTemplate($otp, $email, $row["name"]),
-                "From:ekiliRelay <support@ekilie.com>"
+                $headers
             )
         ) {
             echo "success";
