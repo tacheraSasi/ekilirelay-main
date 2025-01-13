@@ -32,7 +32,7 @@ if (!empty($email)) {
                 $headers
             )
         ) {
-            echo "success";
+            // echo "success"; #I Will do something else here
         }
     } else {
         echo "No account was found with email $email";
