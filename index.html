@@ -37,13 +37,62 @@
     <link rel="apple-touch-icon" href="https://relay.ekilie.com/img/favicon.png">
 
     <link rel="manifest" href="manifest.json">
+    <!-- <script src="https://unpkg.com/@tailwindcss/browser@4"></script> -->
 </head>
+<style>
+.announcement-banner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00e676;
+    transition: all 300ms ease;
+}
+
+.announcement-banner:hover {
+    background-color: #00d76d;
+}
+
+.banner-text {
+    color: white;
+    font-size: 0.875rem; /* 14px */
+    font-weight: 700;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+}
+
+/* If you want different effects on the text spans */
+.banner-text span {
+    display: inline-block;
+    transition: transform 200ms ease;
+}
+
+.banner-text span:hover {
+    transform: translateY(-1px);
+}
+
+/* For emoji effects */
+.banner-text span:last-child {
+    margin-left: 8px;
+}
+
+.banner-text span:last-child:hover {
+    transform: scale(1.1);
+}
+</style>
     
     
 <body>
 
 <!-- Navigation -->
 <section class="smart-scroll">
+    <div class="announcement-banner">
+        <div class="banner-text">
+            <span>ekilirelay</span> 
+            <span>Storage</span> 
+            <span>Coming Soon 🚀🚀</span>
+        </div>
+    </div>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-md navbar-dark">
             <a class="navbar-brand heading-black" href="/">
