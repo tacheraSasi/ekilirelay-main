@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<input type="file" id="fileInput">
+<script>
+document.getElementById('fileInput').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        const response = await fetch('upload.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        
+        if (!response.ok) throw new Error(result.message);
+        
+        console.log('Upload successful:', result);
+        alert('File uploaded successfully!');
+        
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Upload failed: ' + error.message);
+    }
+});
+</script>
