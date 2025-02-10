@@ -9,7 +9,7 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
     formData.append('file', file);
 
     try {
-        const response = await fetch('upload.php', {
+        const response = await fetch('http://localhost/ekilie/relay/api/storage/v1/index.php', {
             method: 'POST',
             body: formData
         });

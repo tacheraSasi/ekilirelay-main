@@ -1,5 +1,5 @@
 <?php
-require_once "../api.php";
+require_once "../../api.php";
 Api::Header("Access-Control-Allow-Origin: *");
 Api::Header("Access-Control-Allow-Methods: POST");
 Api::Header("Content-Type: application/json");
@@ -8,7 +8,7 @@ $uploadDir = __DIR__ . "/uploads/";
 $maxFileSize = 100 * 1024 * 1024; // 100MB
 $allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
 
-if (Method::POST) {
+if (Method::POST()) {
     try {
         // Checks if file was uploaded
         if (empty($_FILES["file"])) {
