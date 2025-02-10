@@ -1,6 +1,6 @@
 <?php
 include_once '../config.php';
-include_once "configurations.php";
+include_once "api.php";
 
 # Allowing cross-origin requests (CORS)
 # Headers to allow any domain to access this API, which is helpful for public APIs
@@ -11,8 +11,8 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 # Handling preflight OPTIONS request
 # If the request method is OPTIONS, it's likely a preflight request made by the browser, so I return 200 OK and stop further processing
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);  # Replying with 200 OK for the preflight check
-    exit();  # Exiting early since no further processing is needed
+    http_response_code(200);  
+    exit();  
 }
 
 # Setting the content type to JSON
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             # These fields come from the incoming POST request
             $to = $data['to'];
             $subject = $data['subject'];
-            $message = defaultTemplate($data['message']);#Using the default template
+            $message = Config::defaultTemplate($data['message']);#Using the default template
 
             # Adding the necessary email headers
             $headers = "MIME-Version: 1.0" . "\r\n";
