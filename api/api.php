@@ -4,6 +4,8 @@ class Api{
     public static function Header(string $config){
         Header($config);
     }
+    
+    
 }
 
 class Method{
