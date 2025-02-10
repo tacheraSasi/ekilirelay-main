@@ -1,62 +1,123 @@
 <?php
 require_once "../../api.php";
+
+// Security headers
 Api::Header("Access-Control-Allow-Origin: *");
 Api::Header("Access-Control-Allow-Methods: POST");
 Api::Header("Content-Type: application/json");
+Api::Header("X-Content-Type-Options: nosniff");
+Api::Header("X-Frame-Options: DENY");
 
+// Configuration
 $uploadDir = __DIR__ . "/uploads/";
 $maxFileSize = 100 * 1024 * 1024; // 100MB
-$allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
+$allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'pdf', 
+                     'txt', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx',
+                     'zip', 'rar', 'tar', 'gz', 'json', 'xml'];
+
+$allowedTypes = [
+    // Images
+    'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml',
+    
+    // Documents
+    'application/pdf', 'text/plain',
+    'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    
+    // Archives
+    'application/zip', 'application/x-rar-compressed', 'application/x-tar', 'application/gzip',
+    
+    // Data
+    'application/json', 'application/xml', 'text/xml'
+];
 
 if (Method::POST()) {
     try {
-        // Checks if file was uploaded
-        if (empty($_FILES["file"])) {
+        // Validate upload directory
+        if (!is_dir($uploadDir) {
+            if (!mkdir($uploadDir, 0755, true)) {
+                throw new Exception("Server configuration error");
+            }
+        }
+        
+        if (!is_writable($uploadDir)) {
+            throw new Exception("Server storage unavailable");
+        }
+
+        // Validate file upload
+        if (empty($_FILES["file"]) {
             throw new Exception("No file uploaded");
         }
 
         $file = $_FILES["file"];
 
+        // Validate upload errors
         if ($file["error"] !== UPLOAD_ERR_OK) {
-            throw new Exception("Upload error: " . $file["error"]);
+            throw new Exception("File upload failed");
         }
 
+        // Validate file size
         if ($file["size"] > $maxFileSize) {
-            throw new Exception("File too large (max 5MB)");
+            $maxSizeMB = round($maxFileSize / 1024 / 1024);
+            throw new Exception("File exceeds maximum size ({$maxSizeMB}MB)");
         }
 
-        if (!in_array($file["type"], $allowedTypes)) {
-            throw new Exception("Invalid file type");
+        // Validate file name
+        $filename = basename($file["name"]);
+        if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $filename)) {
+            throw new Exception("Invalid filename");
         }
 
-        // Creates upload directory if missing
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
+        // Get real MIME type
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $detectedType = $finfo->file($file["tmp_name"]);
+
+        // Validate MIME type
+        if (!in_array($detectedType, $allowedTypes)) {
+            throw new Exception("Unsupported file type");
         }
 
-        // Generates unique filename
-        $extension = pathinfo($file["name"], PATHINFO_EXTENSION);
-        $filename = uniqid() . "." . $extension;
-        $targetPath = $uploadDir . $filename;
+        // Validate file extension
+        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        if (!in_array($extension, $allowedExtensions)) {
+            throw new Exception("Unsupported file extension");
+        }
 
-        // Moves the file
+        // Generate safe filename
+        $safeFilename = md5(uniqid() . microtime(true)) . '.' . $extension;
+        $targetPath = $uploadDir . $safeFilename;
+
+        // Validate temporary file
+        if (!is_uploaded_file($file["tmp_name"])) {
+            throw new Exception("Invalid file source");
+        }
+
+        // Move the file
         if (!move_uploaded_file($file["tmp_name"], $targetPath)) {
-            throw new Exception("Failed to save file");
+            throw new Exception("File storage failed");
         }
 
+        // Success response
         echo json_encode([
             "success" => true,
             "message" => "File uploaded successfully",
-            "filename" => $filename,
+            "filename" => $safeFilename,
+            "url" => "/uploads/" . rawurlencode($safeFilename)
         ]);
+
     } catch (Exception $e) {
+        error_log("Upload Error: " . $e->getMessage() . " - " . $_SERVER['REMOTE_ADDR']);
         http_response_code(400);
         echo json_encode([
             "success" => false,
-            "message" => $e->getMessage(),
+            "message" => "File processing failed"
         ]);
     }
 } else {
     http_response_code(405);
-    echo json_encode(["success" => false, "message" => "Method not allowed"]);
+    echo json_encode([
+        "success" => false,
+        "message" => "Method not allowed"
+    ]);
 }
