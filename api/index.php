@@ -4,9 +4,9 @@ include_once "api.php";
 
 # Allowing cross-origin requests (CORS)
 # Headers to allow any domain to access this API, which is helpful for public APIs
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+Api::Header("Access-Control-Allow-Origin: *");
+Api::Header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+Api::Header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 # Handling preflight OPTIONS request
 # If the request method is OPTIONS, it's likely a preflight request made by the browser, so I return 200 OK and stop further processing
