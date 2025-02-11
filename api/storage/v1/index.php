@@ -67,14 +67,12 @@ $allowedTypes = [
 
 if (Method::POST()) {
     try {
-        # Ensures the upload directory exists; if not, create it.
         if (!is_dir($uploadDir)) {
             if (!mkdir($uploadDir, 0755, true)) {
                 throw new Exception("Failed to create upload directory");
             }
         }
 
-        # Checks if the directory is writable; if not, try to set permissions.
         if (!is_writable($uploadDir)) {
             if (!chmod($uploadDir, 0755)) {
                 throw new Exception("Server storage unavailable: cannot set permissions on upload directory");
