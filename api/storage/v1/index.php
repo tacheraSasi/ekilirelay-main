@@ -68,11 +68,11 @@ if (Method::POST()) {
             throw new Exception("File exceeds maximum size ({$maxSizeMB}MB)");
         }
 
-        # Validates the filename (only allow alphanumeric, underscores, hyphens, and dots)
-        $filename = basename($file["name"]);
-        if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $filename)) {
-            throw new Exception("Invalid filename");
-        }
+        // # Validates the filename (only allow alphanumeric, underscores, hyphens, and dots)
+        // $filename = basename($file["name"]);
+        // if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $filename)) {
+        //     throw new Exception("Invalid filename");
+        // }
 
         # Gets the real MIME type
         $finfo = new finfo(FILEINFO_MIME_TYPE);
