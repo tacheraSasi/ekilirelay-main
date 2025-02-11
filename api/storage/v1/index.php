@@ -69,7 +69,7 @@ if (Method::POST()) {
         }
 
         // # Validates the filename (only allow alphanumeric, underscores, hyphens, and dots)
-        // $filename = basename($file["name"]);
+        $filename = basename($file["name"]);
         // if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $filename)) {
         //     throw new Exception("Invalid filename");
         // }
@@ -90,7 +90,7 @@ if (Method::POST()) {
         // }
 
         # Generates a safe filename and create the target path
-        $safeFilename = md5(uniqid() . microtime(true)) . '.' . $extension;
+        $safeFilename = $filename."_".md5(uniqid() . microtime(true)) . '.' . $extension;
         $targetPath = $uploadDir . $safeFilename;
 
         # Validates that the file was uploaded via HTTP POST
