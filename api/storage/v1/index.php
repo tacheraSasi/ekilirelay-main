@@ -1,6 +1,6 @@
 <?php
-include_once '../config.php';
-include_once "api.php";
+include_once '../../../config.php';
+include_once "../../api.php";
 
 # Security headers
 Api::Header("Access-Control-Allow-Origin: *");
