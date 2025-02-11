@@ -1,124 +1,125 @@
 <?php
 require_once "../../api.php";
 
-# Security headers
+// Security headers
 Api::Header("Access-Control-Allow-Origin: *");
 Api::Header("Access-Control-Allow-Methods: POST");
 Api::Header("Content-Type: application/json");
 Api::Header("X-Content-Type-Options: nosniff");
 Api::Header("X-Frame-Options: DENY");
 
-# Configuration
+// Configuration
 $uploadDir = "../../../bucket/";
-$maxFileSize = 100 * 1024 * 1024; # 100MB
-$allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'pdf',
-                     'txt', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx',
-                     'zip', 'rar', 'tar', 'gz', 'json', 'xml'];
+$maxFileSize = 100 * 1024 * 1024; // 100MB
+$allowedExtensions = [
+    'jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'pdf',
+    'txt', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx',
+    'zip', 'rar', 'tar', 'gz', 'json', 'xml'
+];
 
 $allowedTypes = [
-    # Images
+    // Images
     'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml',
 
-    # Documents
+    // Documents
     'application/pdf', 'text/plain',
     'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 
-    # Archives
+    // Archives
     'application/zip', 'application/x-rar-compressed', 'application/x-tar', 'application/gzip',
 
-    # Data
+    // Data
     'application/json', 'application/xml', 'text/xml'
 ];
 
 if (Method::POST()) {
     try {
-        # Validates upload directory
-        // if (!is_dir($uploadDir) {
-        //     // mkdir($uploadDir, 0755, true);
-        //     if (!mkdir($uploadDir, 0755, true)) {
-        //         throw new Exception("Server configuration error");
-        //     }
-        // }
-
+        // Validate that the upload directory is writable
         if (!is_writable($uploadDir)) {
             throw new Exception("Server storage unavailable");
         }
 
-        # Validates file upload
-        if (empty($_FILES["file"]) {
+        // Validate that a file was uploaded
+        if (empty($_FILES["file"])) {
             throw new Exception("No file uploaded");
         }
 
         $file = $_FILES["file"];
 
-        # Validates upload errors
+        // Validate file upload errors
         if ($file["error"] !== UPLOAD_ERR_OK) {
             throw new Exception("File upload failed");
         }
 
-        # Validates file size
+        // Validate file size
         if ($file["size"] > $maxFileSize) {
             $maxSizeMB = round($maxFileSize / 1024 / 1024);
             throw new Exception("File exceeds maximum size ({$maxSizeMB}MB)");
         }
 
-        # Validates file name
+        // Validate the filename (only allow alphanumeric, underscores, hyphens and dots)
         $filename = basename($file["name"]);
         if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $filename)) {
             throw new Exception("Invalid filename");
         }
 
-        # Get real MIME type
+        // Get the real MIME type
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         $detectedType = $finfo->file($file["tmp_name"]);
 
-        # Validates MIME type
+        // Validate MIME type
         if (!in_array($detectedType, $allowedTypes)) {
             throw new Exception("Unsupported file type");
         }
 
-        # Validates file extension
+        // Validate file extension
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         if (!in_array($extension, $allowedExtensions)) {
             throw new Exception("Unsupported file extension");
         }
 
-        # Generate safe filename
+        // Generate a safe filename and create the target path
         $safeFilename = md5(uniqid() . microtime(true)) . '.' . $extension;
         $targetPath = $uploadDir . $safeFilename;
 
-        # Validates temporary file
+        // Validate that the file was uploaded via HTTP POST
         if (!is_uploaded_file($file["tmp_name"])) {
             throw new Exception("Invalid file source");
         }
 
-        # Moves the file
+        // Move the file to its destination
         if (!move_uploaded_file($file["tmp_name"], $targetPath)) {
             throw new Exception("File storage failed");
         }
 
-        # Success response
-        echo json_encode([
-            "success" => true,
-            "message" => "File uploaded successfully",
+        // Success response
+        $response = [
+            "status"   => "success",
+            "message"  => "File uploaded successfully",
             "filename" => $safeFilename,
-            "url" => "/uploads/" . rawurlencode($safeFilename)
-        ]);
-
+            "url"      => "/uploads/" . rawurlencode($safeFilename)
+        ];
+        echo json_encode($response);
     } catch (Exception $e) {
+        // Log the error for server-side debugging
         error_log("Upload Error: " . $e->getMessage() . " - " . $_SERVER['REMOTE_ADDR']);
+
+        // Return the error as a JSON response
         http_response_code(400);
-        echo json_encode([
-            "success" => false,
-            "message" => "File processing failed"
-        ]);
+        $response = [
+            "status"  => "error",
+            "message" => $e->getMessage()  // Change this if you want a generic message instead
+        ];
+        echo json_encode($response);
     }
 } else {
+    // Handle non-POST requests
     http_response_code(405);
-    echo json_encode([
-        "success" => false,
-        "message" => "Method not allowed"
-    ]);
+    $response = [
+        "status"  => "error",
+        "message" => "Invalid request method. Only POST is allowed."
+    ];
+    echo json_encode($response);
 }
