@@ -79,30 +79,21 @@ if (Method::POST()) {
             }
         }
 
-        # Validates that a file was uploaded
-        if (empty($_FILES["file"])) {
-            throw new Exception("No file uploaded");
-        }
-
         if (empty($_FILES['file']) || empty($_POST['apikey'])) {
             throw new Exception('Missing required parameters');
         }
-        
+
         $file = $_FILES["file"];
         $apikey = mysqli_real_escape_string($conn, $_POST["apikey"]);
+        $query = "SELECT u.name, u.email FROM data d JOIN users u ON d.user = u.unique_id WHERE d.api_key = '$apikey'";
+        $result = mysqli_query($conn, $query);
 
-        $select = mysqli_query($conn, "SELECT user FROM data WHERE api_key = '$apikey';");
+        if ($result && mysqli_num_rows($result) > 0) {
 
-        if ($select && mysqli_num_rows($select) > 0) {
-            $user_id = mysqli_fetch_array($select)['user'];
-
-            $select_user = mysqli_query($conn, "SELECT name, email FROM users WHERE unique_id = '$user_id';");
-            $user_info = mysqli_fetch_array($select_user);
-
+            $user_info = mysqli_fetch_array($result);
             $user_name = $user_info['name'];
             $user_email = $user_info['email'];
             $userSpecificDir = "../../../bucket/$user_email/";
-
             if (!is_dir($userSpecificDir)) {
                 if (!mkdir($userSpecificDir, 0755, true)) {
                     throw new Exception("Failed to create upload directory $userSpecificDir");
@@ -119,20 +110,13 @@ if (Method::POST()) {
             if ($file["error"] !== UPLOAD_ERR_OK) {
                 throw new Exception("File upload failed");
             }
-
             # Validate file size
             if ($file["size"] > $maxFileSize) {
                 $maxSizeMB = round($maxFileSize / 1024 / 1024);
                 throw new Exception("File exceeds maximum size ({$maxSizeMB}MB)");
             }
 
-            // # Validates the filename (only allow alphanumeric, underscores, hyphens, and dots)
             $filename = basename($file["name"]);
-            // if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $filename)) {
-            //     throw new Exception("Invalid filename");
-            // }
-
-            # Gets the real MIME type
             $finfo = new finfo(FILEINFO_MIME_TYPE);
             $detectedType = $finfo->file($file["tmp_name"]);
 
@@ -150,17 +134,16 @@ if (Method::POST()) {
             # Generates a safe filename and create the target path
             $safeFilename = $filename . "_" . md5(uniqid() . microtime(true)) . '.' . $extension;
             $targetPath = $userSpecificDir . $safeFilename;
-
             # Validates that the file was uploaded via HTTP POST
             if (!is_uploaded_file($file["tmp_name"])) {
                 throw new Exception("Invalid file source");
             }
-
+            
             # Moves the file to its destination
             if (!move_uploaded_file($file["tmp_name"], $targetPath)) {
                 throw new Exception("File storage failed");
             }
-
+            
             # Success response
             $response = [
                 "status"   => "success",
@@ -174,10 +157,7 @@ if (Method::POST()) {
             Api::Response($response);
         }
     } catch (Exception $e) {
-
         error_log("Upload Error: " . $e->getMessage() . " - " . $_SERVER['REMOTE_ADDR']);
-
-
         http_response_code(400);
         $response = [
             "status"  => "error",
