@@ -29,13 +29,12 @@ function logMessage($message)
 }
 
 # Checking if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (Method::POST()) {
 
     # Decoding the incoming JSON payload into an associative array
     $data = json_decode(file_get_contents('php://input'), true);
 
     # Checking if the required parameters are present
-    # Here, I check if the necessary fields (to, subject, message, apikey) are provided
     if (isset($data['to'], $data['subject'], $data['message'], $data['apikey'])) {
 
         # Escaping the API key to prevent SQL injection
@@ -47,11 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         # Verifying if the API key is valid
         if ($select && mysqli_num_rows($select) > 0) {
             # Retrieving the user ID from the query result
-            # I grab the user's unique ID for further queries
             $user_id = mysqli_fetch_array($select)['user'];
 
             # Retrieve the current number of requests for the user
-            # I check how many requests the user has already made
             $select_num_req = mysqli_query($conn, "SELECT requests FROM data WHERE user = '$user_id'");
 
             if ($select_num_req) {
@@ -59,16 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $num_req = mysqli_fetch_assoc($select_num_req)['requests'];
 
                 # Increment the number of requests
-                # I increment the request count by one for this user
                 $num_req++;
 
                 # Update the number of requests in the database
-                # Then, I update the database with the new count
                 $update_req = mysqli_query($conn, "UPDATE data SET requests = $num_req WHERE user = '$user_id'");
             }
 
             # Querying the user's information based on the unique ID
-            # I fetch the user's details like name and email for sending the email
             $select_user = mysqli_query($conn, "SELECT name, email FROM users WHERE unique_id = '$user_id';");
             $user_info = mysqli_fetch_array($select_user);
 
@@ -77,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user_email = $user_info['email'];
 
             # Setting the email fields from the input data
-            # These fields come from the incoming POST request
             $to = $data['to'];
             $subject = $data['subject'];
             $message = Config::defaultTemplate($data['message']);#Using the default template
