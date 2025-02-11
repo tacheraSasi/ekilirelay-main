@@ -112,10 +112,10 @@ if (Method::POST()) {
         ];
         echo json_encode($response);
     } catch (Exception $e) {
-        # Log the error for server-side debugging
+
         error_log("Upload Error: " . $e->getMessage() . " - " . $_SERVER['REMOTE_ADDR']);
 
-        # Return the error as a JSON response
+
         http_response_code(400);
         $response = [
             "status"  => "error",
@@ -124,7 +124,6 @@ if (Method::POST()) {
         echo json_encode($response);
     }
 } else {
-    # Handles non-POST requests
     http_response_code(405);
     $response = [
         "status"  => "error",
