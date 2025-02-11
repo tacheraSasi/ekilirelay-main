@@ -327,9 +327,7 @@
                     <li>Creator: <a href="https://tachera.com/" target="_blank">Tachera W</a></li>
                     <li>GitHub: <a href="https://github.com/tacheraSasi" target="_blank">github.com/tacheraSasi</a></li>
                   </ul>
-                  <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="xjwsJBTYFD" data-color="#8ff0a4" data-emoji="🙂"  data-font="Inter" data-text="Support ekiliRelay" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#FFDD00" ></script>
-                  <img src="https://relay.ekilie.com/img/bmc_qr.png" class="mt-4" 
-                  style="width: 300px;">
+                  
                 </div>
               </div>
             </div><!-- End Contact -->
@@ -344,6 +342,9 @@
               <p class="mb-0">🚀 Simplify email communication for your app with ekiliRelay!</p>
               <button type="button" class="btn-close text-light" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
+          <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="xjwsJBTYFD" data-color="#8ff0a4" data-emoji="🙂"  data-font="Inter" data-text="Support ekiliRelay" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#FFDD00" ></script>
+          <img src="https://relay.ekilie.com/img/bmc_qr.png" class="mt-4" 
+          style="width: 300px;">
       </div>
 
       </div>
