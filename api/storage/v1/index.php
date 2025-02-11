@@ -36,10 +36,10 @@ if (Method::POST()) {
     try {
         # Validates upload directory
         if (!is_dir($uploadDir) {
-            mkdir($uploadDir, 0755, true);
-            // if (!mkdir($uploadDir, 0755, true)) {
-            //     throw new Exception("Server configuration error");
-            // }
+            // mkdir($uploadDir, 0755, true);
+            if (!mkdir($uploadDir, 0755, true)) {
+                throw new Exception("Server configuration error");
+            }
         }
 
         if (!is_writable($uploadDir)) {
