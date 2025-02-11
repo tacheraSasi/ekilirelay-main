@@ -9,7 +9,7 @@ Api::Header("X-Content-Type-Options: nosniff");
 Api::Header("X-Frame-Options: DENY");
 
 # Configuration
-$uploadDir = __DIR__ . "/uploads/";
+$uploadDir = "../../../bucket/";
 $maxFileSize = 100 * 1024 * 1024; # 100MB
 $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'pdf',
                      'txt', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx',
@@ -36,9 +36,10 @@ if (Method::POST()) {
     try {
         # Validates upload directory
         if (!is_dir($uploadDir) {
-            if (!mkdir($uploadDir, 0755, true)) {
-                throw new Exception("Server configuration error");
-            }
+            mkdir($uploadDir, 0755, true);
+            // if (!mkdir($uploadDir, 0755, true)) {
+            //     throw new Exception("Server configuration error");
+            // }
         }
 
         if (!is_writable($uploadDir)) {
