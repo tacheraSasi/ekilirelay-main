@@ -84,6 +84,10 @@ if (Method::POST()) {
             throw new Exception("No file uploaded");
         }
 
+        if (empty($_FILES['file']) || empty($_POST['apikey'])) {
+            throw new Exception('Missing required parameters');
+        }
+        
         $file = $_FILES["file"];
         $apikey = mysqli_real_escape_string($conn, $_POST["apikey"]);
 
@@ -162,7 +166,7 @@ if (Method::POST()) {
                 "status"   => "success",
                 "message"  => "File uploaded successfully",
                 "filename" => $safeFilename,
-                "url"      => "https://relay.ekilie.com/bucket/$user_email" . rawurlencode($safeFilename)
+                "url"      => "https://relay.ekilie.com/bucket/$user_email/" . rawurlencode($safeFilename)
             ];
             Api::Response($response);
         } else {
