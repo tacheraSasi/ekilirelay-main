@@ -39,10 +39,10 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
         });
         const result = await response.json();
         if (!response.ok) throw new Error(result.message);
-        messageDiv.innerHTML = `<div class="mt-4 p-4 bg-green-50 border border-green-400 text-green-800 rounded">
+        messageDiv.innerHTML = `<div class="mt-4 p-4 text-wrap bg-green-50 border border-green-400 text-green-800 rounded">
         <p class="font-semibold">Upload Successful!</p>
         <p>Filename: <span class="font-mono">${result.filename}</span></p>
-        <p>URL: <a href="${result.url}" target="_blank" class="underline font-medium">${result.url}</a></p>
+        <p>URL: <a href="${result.url}" target="_blank" class="underline font-medium text-sm">${result.url}</a></p>
       </div>`;
         console.log('Upload successful:', result);
     } catch (error) {
