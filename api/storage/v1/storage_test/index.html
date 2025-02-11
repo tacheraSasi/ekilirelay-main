@@ -24,54 +24,6 @@
     </form>
     <div id="message" class="mt-4 text-center"></div>
   </div>
-  <script>
-    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const apikeyInput = document.getElementById('apikeyInput');
-      const fileInput = document.getElementById('fileInput');
-      const apiKey = apikeyInput.value.trim();
-      const file = fileInput.files[0];
-      const messageDiv = document.getElementById('message');
-      const uploadButton = document.getElementById('uploadButton');
-      if (!apiKey) {
-        messageDiv.textContent = 'Please enter your API key.';
-        messageDiv.className = 'mt-4 text-center text-red-600';
-        return;
-      }
-      if (!file) {
-        messageDiv.textContent = 'Please select a file.';
-        messageDiv.className = 'mt-4 text-center text-red-600';
-        return;
-      }
-      const formData = new FormData();
-      formData.append('apikey', apiKey);
-      formData.append('file', file);
-      uploadButton.disabled = true;
-      messageDiv.innerHTML = `<div class="flex justify-center items-center space-x-2">
-        <svg class="animate-spin h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-        </svg>
-        <span class="text-green-600">Uploading...</span>
-      </div>`;
-      try {
-        const response = await fetch('https://relay.ekilie.com/api/storage/v1/index.php', {
-          method: 'POST',
-          body: formData
-        });
-        const result = await response.json();
-        if (!response.ok) throw new Error(result.message);
-        messageDiv.textContent = 'File uploaded successfully!';
-        messageDiv.className = 'mt-4 text-center text-green-600';
-        console.log('Upload successful:', result);
-      } catch (error) {
-        console.error('Error:', error);
-        messageDiv.textContent = 'Upload failed: ' + error.message;
-        messageDiv.className = 'mt-4 text-center text-red-600';
-      } finally {
-        uploadButton.disabled = false;
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
