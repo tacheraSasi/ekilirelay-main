@@ -44,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($data['to'], $data['subject'], $data['message'], $data['apikey'])) {
 
         # Escaping the API key to prevent SQL injection
-        # I sanitize the API key to protect the database from injection attacks
         $apikey = mysqli_real_escape_string($conn, $data['apikey']);
 
         # Querying the user associated with the provided API key
