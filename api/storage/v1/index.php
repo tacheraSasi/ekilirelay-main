@@ -69,12 +69,21 @@ if (Method::POST()) {
 
             $user_name = $user_info['name'];
             $user_email = $user_info['email'];
-        }else {
-            $response = ['status' => 'error', 'message' => 'Invalid API key. Visit https://relay.ekilie.com to get the correct one.'];
-            Api::Response($response);
-        }
+            $userSpecificDir = "../../../bucket/$user_email/";
 
-        # Validate file upload errors
+            if (!is_dir($userSpecificDir)) {
+                if (!mkdir($userSpecificDir, 0755, true)) {
+                    throw new Exception("Failed to create upload directory $userSpecificDir");
+                }
+            }
+    
+            if (!is_writable($userSpecificDir)) {
+                if (!chmod($userSpecificDir, 0755)) {
+                    throw new Exception("Server storage unavailable: cannot set permissions on upload directory $userSpecificDir");
+                }
+            }
+
+            # Validate file upload errors
         if ($file["error"] !== UPLOAD_ERR_OK) {
             throw new Exception("File upload failed");
         }
@@ -108,7 +117,7 @@ if (Method::POST()) {
 
         # Generates a safe filename and create the target path
         $safeFilename = $filename."_".md5(uniqid() . microtime(true)) . '.' . $extension;
-        $targetPath = $uploadDir . $safeFilename;
+        $targetPath = $$userSpecificDir . $safeFilename;
 
         # Validates that the file was uploaded via HTTP POST
         if (!is_uploaded_file($file["tmp_name"])) {
@@ -128,6 +137,13 @@ if (Method::POST()) {
             "url"      => "https://relay.ekilie.com/bucket/" . rawurlencode($safeFilename)
         ];
         Api::Response($response);
+
+        }else {
+            $response = ['status' => 'error', 'message' => 'Invalid API key. Visit https://relay.ekilie.com to get the correct one.'];
+            Api::Response($response);
+        }
+
+        
     } catch (Exception $e) {
 
         error_log("Upload Error: " . $e->getMessage() . " - " . $_SERVER['REMOTE_ADDR']);
