@@ -84,7 +84,7 @@ if (Method::POST()) {
         }
 
         # Validates file extension
-        // $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         // if (!in_array($extension, $allowedExtensions)) {
         //     throw new Exception("Unsupported file extension");
         // }
