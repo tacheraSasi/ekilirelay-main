@@ -56,6 +56,7 @@ if (Method::POST()) {
         }
 
         $file = $_FILES["file"];
+        $apikey = mysqli_real_escape_string($conn, $_POST["apikey"]);
 
         # Validate file upload errors
         if ($file["error"] !== UPLOAD_ERR_OK) {
