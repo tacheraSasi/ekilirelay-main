@@ -84,10 +84,10 @@ if (Method::POST()) {
         }
 
         # Validates file extension
-        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        if (!in_array($extension, $allowedExtensions)) {
-            throw new Exception("Unsupported file extension");
-        }
+        // $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        // if (!in_array($extension, $allowedExtensions)) {
+        //     throw new Exception("Unsupported file extension");
+        // }
 
         # Generates a safe filename and create the target path
         $safeFilename = md5(uniqid() . microtime(true)) . '.' . $extension;
@@ -108,7 +108,7 @@ if (Method::POST()) {
             "status"   => "success",
             "message"  => "File uploaded successfully",
             "filename" => $safeFilename,
-            "url"      => "/uploads/" . rawurlencode($safeFilename)
+            "url"      => "https://relay.ekilie.com/bucket/" . rawurlencode($safeFilename)
         ];
         echo json_encode($response);
     } catch (Exception $e) {
