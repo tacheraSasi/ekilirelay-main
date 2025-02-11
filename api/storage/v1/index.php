@@ -138,12 +138,12 @@ if (Method::POST()) {
             if (!is_uploaded_file($file["tmp_name"])) {
                 throw new Exception("Invalid file source");
             }
-            
+
             # Moves the file to its destination
             if (!move_uploaded_file($file["tmp_name"], $targetPath)) {
                 throw new Exception("File storage failed");
             }
-            
+
             # Success response
             $response = [
                 "status"   => "success",
@@ -152,10 +152,12 @@ if (Method::POST()) {
                 "url"      => "https://relay.ekilie.com/bucket/$user_email/" . rawurlencode($safeFilename)
             ];
             Api::Response($response);
+
         } else {
             $response = ['status' => 'error', 'message' => 'Invalid API key. Visit https://relay.ekilie.com to get the correct one.'];
             Api::Response($response);
         }
+        
     } catch (Exception $e) {
         error_log("Upload Error: " . $e->getMessage() . " - " . $_SERVER['REMOTE_ADDR']);
         http_response_code(400);
