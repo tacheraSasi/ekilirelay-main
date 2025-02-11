@@ -1,5 +1,6 @@
 <?php
-require_once "../../api.php";
+include_once '../config.php';
+include_once "api.php";
 
 # Security headers
 Api::Header("Access-Control-Allow-Origin: *");
@@ -57,6 +58,21 @@ if (Method::POST()) {
 
         $file = $_FILES["file"];
         $apikey = mysqli_real_escape_string($conn, $_POST["apikey"]);
+
+        $select = mysqli_query($conn, "SELECT user FROM data WHERE api_key = '$apikey';");
+
+        if ($select && mysqli_num_rows($select) > 0) {
+            $user_id = mysqli_fetch_array($select)['user'];
+            
+            $select_user = mysqli_query($conn, "SELECT name, email FROM users WHERE unique_id = '$user_id';");
+            $user_info = mysqli_fetch_array($select_user);
+
+            $user_name = $user_info['name'];
+            $user_email = $user_info['email'];
+        }else {
+            $response = ['status' => 'error', 'message' => 'Invalid API key. Visit https://relay.ekilie.com to get the correct one.'];
+            Api::Response($response);
+        }
 
         # Validate file upload errors
         if ($file["error"] !== UPLOAD_ERR_OK) {
