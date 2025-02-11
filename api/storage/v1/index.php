@@ -110,7 +110,7 @@ if (Method::POST()) {
             "filename" => $safeFilename,
             "url"      => "https://relay.ekilie.com/bucket/" . rawurlencode($safeFilename)
         ];
-        echo json_encode($response);
+        Api::Response($response);
     } catch (Exception $e) {
 
         error_log("Upload Error: " . $e->getMessage() . " - " . $_SERVER['REMOTE_ADDR']);
@@ -121,7 +121,7 @@ if (Method::POST()) {
             "status"  => "error",
             "message" => $e->getMessage()
         ];
-        echo json_encode($response);
+        Api::Response($response);
     }
 } else {
     http_response_code(405);
@@ -129,5 +129,5 @@ if (Method::POST()) {
         "status"  => "error",
         "message" => "Invalid request method. Only POST is allowed."
     ];
-    echo json_encode($response);
+    Api::Response($response);
 }

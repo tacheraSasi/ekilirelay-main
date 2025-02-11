@@ -3,24 +3,20 @@ include_once '../config.php';
 include_once "api.php";
 
 # Allowing cross-origin requests (CORS)
-# Headers to allow any domain to access this API, which is helpful for public APIs
 Api::Header("Access-Control-Allow-Origin: *");
 Api::Header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 Api::Header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 # Handling preflight OPTIONS request
-# If the request method is OPTIONS, it's likely a preflight request made by the browser, so I return 200 OK and stop further processing
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);  
     exit();  
 }
 
 # Setting the content type to JSON
-# I ensure that the response will be sent as JSON
 header('Content-Type: application/json');
 
 # Function for validating an email address
-# This function checks if the provided email is in a valid format
 function validateEmail($email)
 {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -36,7 +32,6 @@ function logMessage($message)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     # Decoding the incoming JSON payload into an associative array
-    # I read the raw input (JSON) and convert it into an array for easier handling
     $data = json_decode(file_get_contents('php://input'), true);
 
     # Checking if the required parameters are present
@@ -47,11 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $apikey = mysqli_real_escape_string($conn, $data['apikey']);
 
         # Querying the user associated with the provided API key
-        # I check if the API key exists and if it matches any user in the database
         $select = mysqli_query($conn, "SELECT user FROM data WHERE api_key = '$apikey';");
 
         # Verifying if the API key is valid
-        # If the API key is found, I proceed; otherwise, I reject the request
         if ($select && mysqli_num_rows($select) > 0) {
             # Retrieving the user ID from the query result
             # I grab the user's unique ID for further queries
@@ -93,12 +86,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $headers = "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
             $headers .= isset($data['headers']) ? $data['headers'] : "From: $user_name <$user_email>";
-            // echo json_encode($headers);  # For debugging purposes
+            // Api::Response($headers);  # For debugging purposes
 
             # Validating the recipient's email address
             if (!validateEmail($to)) {
                 $response = ['status' => 'error', 'message' => 'Invalid email address.'];
-                echo json_encode($response);
+                Api::Response($response);
                 logMessage(json_encode($response));
                 exit;
             }
@@ -121,34 +114,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 # Responding with a success message
                 $response = ['status' => 'success', 'message' => 'Email sent successfully.'];
-                echo json_encode($response);
+                Api::Response($response);
                 logMessage(json_encode($response));
             } else {
                 # Responding with an error if email fails to send
                 $response = ['status' => 'error', 'message' => 'Failed to send email.'];
-                echo json_encode($response);
+                Api::Response($response);
                 logMessage(json_encode($response));
             }
 
         } else {
             # Responding with an error if the API key is invalid
             $response = ['status' => 'error', 'message' => 'Invalid API key. Visit https://relay.ekilie.com to get the correct one.'];
-            echo json_encode($response);
+            Api::Response($response);
         }
 
     } else {
         # Responding with an error if required parameters are missing
-        # This part ensures that all required fields are present
         $response = ['status' => 'error', 'message' => 'Missing parameters (to, subject, message, or apikey).'];
-        echo json_encode($response);
+        Api::Response($response);
         logMessage(json_encode($response));
     }
 
 } else {
     # Responding with an error if the request method is not POST
-    # This block handles cases where the request is not POST
     $response = ['status' => 'error', 'message' => 'Invalid request method. Only POST is allowed.'];
-    echo json_encode($response);
+    Api::Response($response);
     logMessage(json_encode($response));
 }
 

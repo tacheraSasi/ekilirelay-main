@@ -1,11 +1,13 @@
 <?php
+include_once '../config.php';
 
 class Api{
     public static function Header(string $config){
         Header($config);
     }
-    
-    
+    public static function Response($data){
+        echo json_encode($data);
+    }
 }
 class Config{
     public static function defaultTemplate(string $message):string{
