@@ -85,9 +85,9 @@ if (Method::POST()) {
 
         # Validates file extension
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        // if (!in_array($extension, $allowedExtensions)) {
-        //     throw new Exception("Unsupported file extension");
-        // }
+        if (!in_array($extension, $allowedExtensions)) {
+            throw new Exception("Unsupported file extension");
+        }
 
         # Generates a safe filename and create the target path
         $safeFilename = $filename."_".md5(uniqid() . microtime(true)) . '.' . $extension;

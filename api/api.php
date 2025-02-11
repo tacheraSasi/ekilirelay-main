@@ -1,5 +1,5 @@
 <?php
-include_once '../config.php';
+// include_once '../config.php';
 
 class Api {
     public static function Header(string $config) {
@@ -40,20 +40,36 @@ class Api {
         }
         return $data;
     }
+
+    // public function getUserByApiKey($apiKey) {
+    //     $stmt = $conn->prepare("SELECT user FROM data WHERE api_key = ?");
+    //     $stmt->bind_param("s", $apiKey);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     return $result->fetch_assoc();
+    // }
+
+    // public function getUserDetails($userId) {
+    //     $stmt = $conn->prepare("SELECT name, email FROM users WHERE unique_id = ?");
+    //     $stmt->bind_param("i", $userId);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     return $result->fetch_assoc();
+    // }
 }
 
 class Database {
     private $conn;
 
-    public function __construct() {
-        $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        if ($this->conn->connect_error) {
-            Api::Response([
-                'status' => 'error',
-                'message' => 'Database connection failed'
-            ], 500);
-        }
-    }
+    // public function __construct() {
+    //     $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    //     if ($this->conn->connect_error) {
+    //         Api::Response([
+    //             'status' => 'error',
+    //             'message' => 'Database connection failed'
+    //         ], 500);
+    //     }
+    // }
 
     public function getUserByApiKey($apiKey) {
         $stmt = $this->conn->prepare("SELECT user FROM data WHERE api_key = ?");
