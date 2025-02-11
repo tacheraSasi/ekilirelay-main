@@ -86,7 +86,6 @@ if (Method::POST()) {
 
         $file = $_FILES["file"];
         $apikey = mysqli_real_escape_string($conn, $_POST["apikey"]);
-        echo $apikey;
 
         $select = mysqli_query($conn, "SELECT user FROM data WHERE api_key = '$apikey';");
 
@@ -146,7 +145,7 @@ if (Method::POST()) {
 
             # Generates a safe filename and create the target path
             $safeFilename = $filename . "_" . md5(uniqid() . microtime(true)) . '.' . $extension;
-            $targetPath = $$userSpecificDir . $safeFilename;
+            $targetPath = $userSpecificDir . $safeFilename;
 
             # Validates that the file was uploaded via HTTP POST
             if (!is_uploaded_file($file["tmp_name"])) {
@@ -163,7 +162,7 @@ if (Method::POST()) {
                 "status"   => "success",
                 "message"  => "File uploaded successfully",
                 "filename" => $safeFilename,
-                "url"      => "https://relay.ekilie.com/bucket/" . rawurlencode($safeFilename)
+                "url"      => "https://relay.ekilie.com/bucket/$user_email" . rawurlencode($safeFilename)
             ];
             Api::Response($response);
         } else {
