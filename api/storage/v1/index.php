@@ -157,7 +157,7 @@ if (Method::POST()) {
             $response = ['status' => 'error', 'message' => 'Invalid API key. Visit https://relay.ekilie.com to get the correct one.'];
             Api::Response($response);
         }
-        
+
     } catch (Exception $e) {
         error_log("Upload Error: " . $e->getMessage() . " - " . $_SERVER['REMOTE_ADDR']);
         http_response_code(400);

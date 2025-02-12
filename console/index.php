@@ -228,7 +228,6 @@
           <div class="row">
           <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card" style="border-radius: 1rem;">
-
                 <div class="card-body">
                   <h5 class="card-title">Sent <span>| all</span></h5>
 
@@ -249,9 +248,6 @@
             <!--  -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
-
-                
-
                 <div class="card-body">
                   <h5 class="card-title">failed <span>| all</span></h5>
 
