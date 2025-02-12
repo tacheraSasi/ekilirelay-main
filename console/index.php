@@ -1,21 +1,24 @@
-<?php 
-  session_start();
-  include_once "../config.php";
-  if (!isset($_SESSION['relay_user'])) {
+<?php
+session_start();
+include_once "../config.php";
+if (!isset($_SESSION["relay_user"])) {
     header("location: ../auth/login/");
-  }
-  $user_unique_id = $_SESSION['relay_user'];
-  $select_user = "SELECT * FROM users WHERE unique_id = '$user_unique_id'";
-  $result_user = mysqli_query($conn, $select_user);
-  $user_info = mysqli_fetch_assoc($result_user);
-  $username = $user_info['name'];
+}
+$user_unique_id = $_SESSION["relay_user"];
+$select_user = "SELECT * FROM users WHERE unique_id = '$user_unique_id'";
+$result_user = mysqli_query($conn, $select_user);
+$user_info = mysqli_fetch_assoc($result_user);
+$username = $user_info["name"];
 
-  $select_api = mysqli_query($conn,"SELECT * FROM data WHERE user = '$user_unique_id'");
-  $data = mysqli_fetch_array($select_api);
-  $api_key = $data['api_key'];
-  $sent_count = $data['emails_sent'];
-  $total = $data['requests'];
-  $failed_count = $total - $sent_count;
+$select_api = mysqli_query(
+    $conn,
+    "SELECT * FROM data WHERE user = '$user_unique_id'"
+);
+$data = mysqli_fetch_array($select_api);
+$api_key = $data["api_key"];
+$sent_count = $data["emails_sent"];
+$total = $data["requests"];
+$failed_count = $total - $sent_count;
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +29,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>ekiliRelay Console</title>
-  
+
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -139,39 +142,39 @@
         <!-- <li>
             <a href="https://www.producthunt.com/posts/ekilirelay?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-ekilirelay" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=481838&theme=dark" alt="ekiliRelay - Completely&#0032;Free&#0032;Email&#0032;API&#0032; | Product Hunt" style="width: 250px; height: 40px;" width="250" height="54" /></a>
         </li> -->
-        
+
         <li class="nav-item">
           <button style="border: none;margin-right:1rem" class="btn-new" id="shareBtn">
-            <i class="bi bi-share"></i> 
+            <i class="bi bi-share"></i>
             <span class="d-none d-md-block">Share</span>
           </button>
         </li>
-        
+
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="../assets/img/user.png" alt="Profile" class="">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?=$username?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $username ?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6 id="school-name-h6"><?=$username?></h6>
+              <h6 id="school-name-h6"><?= $username ?></h6>
               <span>ekiliRelay</span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
-            
+
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="logout.php?ref=<?=$school_uid?>">
+              <a class="dropdown-item d-flex align-items-center" href="logout.php?ref=<?= $school_uid ?>">
                 <i class="bi bi-gear"></i>
                 <span>Settings</span>
               </a>
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="logout.php?ref=<?=$school_uid?>">
+              <a class="dropdown-item d-flex align-items-center" href="logout.php?ref=<?= $school_uid ?>">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -205,14 +208,14 @@
           <span>Api key</span>
         </a>
       </li>
-      
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="#contact">
           <i class="bi bi-envelope"></i>
           <span>Contact</span>
         </a>
       </li>
-      
+
     </ul>
   </aside><!-- End Sidebar-->
 
@@ -236,14 +239,15 @@
                       <i class="bi bi-check"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?=$sent_count?>/<?=$total?></h6>
-                     
+                      <h6><?= $sent_count ?>/<?= $total ?></h6>
+
                     </div>
                   </div>
                 </div>
 
               </div>
             </div><!-- -->
+
 
             <!--  -->
             <div class="col-xxl-4 col-md-6">
@@ -256,57 +260,86 @@
                     <i class="bi bi-exclamation-octagon"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?=$failed_count?>/<?=$total?></h6>
-                      <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
- -->
+                      <h6><?= $failed_count ?>/<?= $total ?></h6>
                     </div>
                   </div>
                 </div>
+              </div>
+            </div><!-- End -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+                <div class="card-body">
+                  <h5 class="card-title">Files Uploaded</h5>
 
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-folder"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6><?= $failed_count ?>/<?= $total ?></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+                <div class="card-body">
+                  <h5 class="card-title">Total size</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-exclamation-octagon"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6><?= $failed_count ?>/<?= $total ?></h6>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div><!-- End -->
             <div class="" id="apikey">
               <div class="card info-card customers-card">
                 <div class="card-body">
-                  <h5 class="card-title">Habari, <?=$username?></h5>
+                  <h5 class="card-title">Habari, <?= $username ?></h5>
                   <p>This is you api key.</p>
-                  
+
                   <span>
                   <code class="d-flex justify-between items-center">
-                    <span id="api-key"><?=$api_key?> </span>
+                    <span id="api-key"><?= $api_key ?> </span>
                     <button class="btn btn-secondary" id="copy-button">
                       <i class="bi bi-clipboard"></i> Copy
                     </button>
                   </code>
                 </span>
-                
+
                 <script>
                   document.getElementById('copy-button').addEventListener('click', function() {
                     // Geting the API key from the span
                     var apiKey = document.getElementById('api-key').innerText.trim();
-                
+
                     // Creating a temporary textarea element to copy the API key
                     var tempInput = document.createElement('textarea');
                     tempInput.value = apiKey;
                     document.body.appendChild(tempInput);
-                
+
                     // Selecting the text inside the textarea and copy it
                     tempInput.select();
                     document.execCommand('copy');
-                
+
                     // Removing the temporary textarea from the DOM
                     document.body.removeChild(tempInput);
-                
+
                     // Optional: Provide user feedback, such as changing button text
                     this.innerHTML = '<i class="bi bi-clipboard-check"></i> Copied!';
-                    
+
                     // Reseting button text after a short delay
                     setTimeout(() => {
                       this.innerHTML = '<i class="bi bi-clipboard"></i> Copy';
                     }, 2000);
                   });
                 </script>
-                
+
                 </div>
               </div>
             </div>
@@ -323,7 +356,7 @@
                     <li>Creator: <a href="https://tachera.com/" target="_blank">Tachera W</a></li>
                     <li>GitHub: <a href="https://github.com/tacheraSasi" target="_blank">github.com/tacheraSasi</a></li>
                   </ul>
-                  
+
                 </div>
               </div>
             </div><!-- End Contact -->
@@ -339,7 +372,7 @@
               <button type="button" class="btn-close text-light" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="xjwsJBTYFD" data-color="#8ff0a4" data-emoji="🙂"  data-font="Inter" data-text="Support ekiliRelay" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#FFDD00" ></script>
-          <img src="https://relay.ekilie.com/img/bmc_qr.png" class="mt-4" 
+          <img src="https://relay.ekilie.com/img/bmc_qr.png" class="mt-4"
           style="width: 300px;">
       </div>
 
@@ -358,7 +391,7 @@
   </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  
+
   <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="xjwsJBTYFD" data-description="Support me on Buy me a coffee!" data-message="Love ekiliRelay? Help keep it free and growing by buying me a coffee! ☕" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
   <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
