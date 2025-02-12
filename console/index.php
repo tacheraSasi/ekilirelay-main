@@ -168,7 +168,7 @@ $failed_count = $total - $sent_count;
 
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="logout.php?ref=<?= $school_uid ?>">
+              <a class="dropdown-item d-flex align-items-center">
                 <i class="bi bi-gear"></i>
                 <span>Settings</span>
               </a>
