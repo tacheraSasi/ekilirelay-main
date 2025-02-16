@@ -134,5 +134,5 @@ function createUploadsTable($conn){
         url VARCHAR(255) NOT NULL
     )";
     $conn->query($sql);
-    
+    echo "true";
 }
