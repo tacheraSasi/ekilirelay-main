@@ -305,7 +305,7 @@ $total_storage = round($total_storage, 2);
                     <i class="bi bi-exclamation-octagon"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?= $total_storage ?>Mbs/<?= "2Gb" ?></h6>
+                      <h6><?= $total_storage ?>/<?= "2Gb" ?></h6>
                     </div>
                   </div>
                 </div>

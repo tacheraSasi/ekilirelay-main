@@ -37,6 +37,7 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
       method: 'POST',
       body: formData
     });
+    
     const result = await response.json();
     if (!response.ok) throw new Error(result.message);
     const originalName = result.metadata.original_name;
