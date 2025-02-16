@@ -19,6 +19,17 @@ $api_key = $data["api_key"];
 $sent_count = $data["emails_sent"];
 $total = $data["requests"];
 $failed_count = $total - $sent_count;
+
+
+#File upload data
+$upload_query = mysqli_query($conn, "SELECT * FROM uploads WHERE user_id = '$user_unique_id'");
+$uploads = mysqli_fetch_all($upload_query, MYSQLI_ASSOC);
+$uploads_count = count($uploads);
+
+$total_storage = 0;
+foreach ($uploads as $upload) {
+    $total_storage += $upload["file_size"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -276,7 +287,7 @@ $failed_count = $total - $sent_count;
                     <i class="bi bi-folder"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?= $failed_count ?>/<?= $total ?></h6>
+                      <h6><?= $uploads_count ?>/<?= $uploads_count ?></h6>
                     </div>
                   </div>
                 </div>
@@ -292,7 +303,7 @@ $failed_count = $total - $sent_count;
                     <i class="bi bi-exclamation-octagon"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?= $failed_count ?>/<?= $total ?></h6>
+                      <h6><?= $total_storage ?>Mbs/<?= "2Gb" ?></h6>
                     </div>
                   </div>
                 </div>
