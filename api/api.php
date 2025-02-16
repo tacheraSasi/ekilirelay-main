@@ -2,8 +2,14 @@
 // include_once '../config.php';
 
 class Api {
+    public static string $uploadDir = "../../../bucket/";
+
     public static function Header(string $config) {
         header($config);
+    }
+
+    public static function storageUploadDir(){
+        return self::$uploadDir;
     }
 
     public static function Response($data, $statusCode = 200) {
