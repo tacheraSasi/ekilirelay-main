@@ -8,6 +8,9 @@ Api::Header("Content-Type: application/json");
 Api::Header("X-Content-Type-Options: nosniff");
 Api::Header("X-Frame-Options: DENY");
 
+// creating the uploads table if not exists
+createUploadsTable($conn);
+
 $uploadDir = API::storageUploadDir();
 $maxFileSize = 100 * 1024 * 1024;
 $allowedExtensions = ['jpg','jpeg','png','gif','webp','svg','pdf','txt',
@@ -31,7 +34,7 @@ if (Method::POST()) {
         $apiKey = $_POST['apikey'];
         $conn->begin_transaction();
 
-        // Validate API key and get user
+        // Validates API key and get user
         $stmt = $conn->prepare("SELECT u.unique_id, u.email 
                               FROM data d 
                               JOIN users u ON d.user = u.unique_id 
@@ -44,7 +47,7 @@ if (Method::POST()) {
             throw new Exception('Invalid API key');
         }
 
-        // Prepare file metadata
+        // File metadata
         $originalName = basename($file['name']);
         $fileSize = (int)$file['size'];
         $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -55,20 +58,20 @@ if (Method::POST()) {
         $targetPath = $userDir . $safeFilename;
         $publicUrl = "https://relay.ekilie.com/bucket/{$user['email']}/" . rawurlencode($safeFilename);
 
-        // Validate upload
+        // Validates upload
         $this->validateUpload($file, $maxFileSize, $allowedTypes, $allowedExtensions, $mimeType, $extension);
 
-        // Create user directory
+        // Creates user directory
         if (!is_dir($userDir) && !mkdir($userDir, 0755, true)) {
             throw new Exception("Failed to create user directory");
         }
 
-        // Move uploaded file
+        // Moves uploaded file
         if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
             throw new Exception("File storage failed");
         }
 
-        // Store metadata
+        // Stores metadata
         $stmt = $conn->prepare("INSERT INTO uploads 
                               (user_id, original_name, stored_name, file_type, 
                                file_size, extension, upload_time, url)
@@ -147,4 +150,20 @@ function validateUpload($file, $maxSize, $allowedTypes, $allowedExtensions, $det
     if (!is_uploaded_file($file['tmp_name'])) {
         throw new Exception('Invalid file source');
     }
+}
+
+function createUploadsTable($conn){
+    $sql = "CREATE TABLE IF NOT EXISTS uploads (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        original_name VARCHAR(255) NOT NULL,
+        stored_name VARCHAR(255) NOT NULL,
+        file_type VARCHAR(255) NOT NULL,
+        file_size INT NOT NULL,
+        extension VARCHAR(10) NOT NULL,
+        upload_time DATETIME NOT NULL,
+        url VARCHAR(255) NOT NULL
+    )";
+    $conn->query($sql);
+    
 }
