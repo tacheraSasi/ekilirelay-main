@@ -59,7 +59,7 @@ if (Method::POST()) {
         $publicUrl = "https://relay.ekilie.com/bucket/{$user['email']}/" . rawurlencode($safeFilename);
 
         // Validates upload
-        $this->validateUpload($file, $maxFileSize, $allowedTypes, $allowedExtensions, $mimeType, $extension);
+        API::validateUpload($file, $maxFileSize, $allowedTypes, $allowedExtensions, $mimeType, $extension);
 
         // Creates user directory
         if (!is_dir($userDir) && !mkdir($userDir, 0755, true)) {
@@ -120,37 +120,6 @@ if (Method::POST()) {
     ]);
 }
 
-function validateUpload($file, $maxSize, $allowedTypes, $allowedExtensions, $detectedType, $extension) {
-    $errorMessages = [
-        UPLOAD_ERR_INI_SIZE => 'File exceeds server size limit',
-        UPLOAD_ERR_FORM_SIZE => 'File exceeds form size limit',
-        UPLOAD_ERR_PARTIAL => 'File only partially uploaded',
-        UPLOAD_ERR_NO_FILE => 'No file was uploaded',
-        UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
-        UPLOAD_ERR_CANT_WRITE => 'Failed to write to disk',
-        UPLOAD_ERR_EXTENSION => 'File upload stopped by extension'
-    ];
-
-    if ($file['error'] !== UPLOAD_ERR_OK) {
-        throw new Exception($errorMessages[$file['error']] ?? 'Unknown upload error');
-    }
-
-    if ($file['size'] > $maxSize) {
-        throw new Exception('File exceeds maximum size of ' . round($maxSize / 1024 / 1024) . 'MB');
-    }
-
-    if (!in_array($detectedType, $allowedTypes)) {
-        throw new Exception('Unsupported file type: ' . $detectedType);
-    }
-
-    if (!in_array($extension, $allowedExtensions)) {
-        throw new Exception('Unsupported file extension: ' . $extension);
-    }
-
-    if (!is_uploaded_file($file['tmp_name'])) {
-        throw new Exception('Invalid file source');
-    }
-}
 
 function createUploadsTable($conn){
     $sql = "CREATE TABLE IF NOT EXISTS uploads (

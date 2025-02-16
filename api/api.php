@@ -47,6 +47,39 @@ class Api {
         return $data;
     }
 
+    public static function validateUpload($file, $maxSize, $allowedTypes, $allowedExtensions, $detectedType, $extension) {
+        $errorMessages = [
+            UPLOAD_ERR_INI_SIZE => 'File exceeds server size limit',
+            UPLOAD_ERR_FORM_SIZE => 'File exceeds form size limit',
+            UPLOAD_ERR_PARTIAL => 'File only partially uploaded',
+            UPLOAD_ERR_NO_FILE => 'No file was uploaded',
+            UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
+            UPLOAD_ERR_CANT_WRITE => 'Failed to write to disk',
+            UPLOAD_ERR_EXTENSION => 'File upload stopped by extension'
+        ];
+    
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            throw new Exception($errorMessages[$file['error']] ?? 'Unknown upload error');
+        }
+    
+        if ($file['size'] > $maxSize) {
+            throw new Exception('File exceeds maximum size of ' . round($maxSize / 1024 / 1024) . 'MB');
+        }
+    
+        if (!in_array($detectedType, $allowedTypes)) {
+            throw new Exception('Unsupported file type: ' . $detectedType);
+        }
+    
+        if (!in_array($extension, $allowedExtensions)) {
+            throw new Exception('Unsupported file extension: ' . $extension);
+        }
+    
+        if (!is_uploaded_file($file['tmp_name'])) {
+            throw new Exception('Invalid file source');
+        }
+    }
+    
+
     // public function getUserByApiKey($apiKey) {
     //     $stmt = $conn->prepare("SELECT user FROM data WHERE api_key = ?");
     //     $stmt->bind_param("s", $apiKey);
