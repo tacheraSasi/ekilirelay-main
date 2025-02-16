@@ -28,7 +28,7 @@ $uploads_count = count($uploads);
 
 $total_storage = 0; //in Gbs
 foreach ($uploads as $upload) {
-  $total_storage += $upload["file_size"] / 1024;
+  $total_storage += ($upload["file_size"] / 1024);
 }
 ?>
 
