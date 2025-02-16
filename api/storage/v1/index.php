@@ -53,11 +53,12 @@ if (Method::POST()) {
 
         // File metadata
         $originalName = basename($file['name']);
+        $fileNameWithoutExt = pathinfo($originalName, PATHINFO_FILENAME);
         $fileSize = (int)$file['size'];
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         $mimeType = $finfo->file($file['tmp_name']);
         $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
-        $safeFilename = $originalName.bin2hex(random_bytes(16)) . '.' . $extension;
+        $safeFilename = $fileNameWithoutExt."_".bin2hex(random_bytes(16)) . '.' . $extension;
         $userDir = $uploadDir . $user_email . '/';
         $targetPath = $userDir . $safeFilename;
         $publicUrl = "https://relay.ekilie.com/bucket/{$user_email}/" . rawurlencode($safeFilename);
