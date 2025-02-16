@@ -26,9 +26,9 @@ $upload_query = mysqli_query($conn, "SELECT * FROM uploads WHERE user_id = '$use
 $uploads = mysqli_fetch_all($upload_query, MYSQLI_ASSOC);
 $uploads_count = count($uploads);
 
-$total_storage = 0;
+$total_storage = 0; //in Gbs
 foreach ($uploads as $upload) {
-    $total_storage += $upload["file_size"];
+  $total_storage += $upload["file_size"] / 1024;
 }
 ?>
 
