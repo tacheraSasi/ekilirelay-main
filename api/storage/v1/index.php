@@ -43,6 +43,10 @@ if (Method::POST()) {
         $stmt->execute();
         $user = $stmt->get_result()->fetch_assoc();
 
+        # user info
+        $user_id = $user['unique_id'];
+        $user_email = $user['email'];
+
         if (!$user) {
             throw new Exception('Invalid API key');
         }
@@ -53,10 +57,10 @@ if (Method::POST()) {
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         $mimeType = $finfo->file($file['tmp_name']);
         $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
-        $safeFilename = bin2hex(random_bytes(16)) . '.' . $extension;
-        $userDir = $uploadDir . $user['email'] . '/';
+        $safeFilename = $originalName.bin2hex(random_bytes(16)) . '.' . $extension;
+        $userDir = $uploadDir . $user_email . '/';
         $targetPath = $userDir . $safeFilename;
-        $publicUrl = "https://relay.ekilie.com/bucket/{$user['email']}/" . rawurlencode($safeFilename);
+        $publicUrl = "https://relay.ekilie.com/bucket/{$user_email}/" . rawurlencode($safeFilename);
 
         // Validates upload
         API::validateUpload($file, $maxFileSize, $allowedTypes, $allowedExtensions, $mimeType, $extension);
