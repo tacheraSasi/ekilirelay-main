@@ -73,7 +73,7 @@ if (Method::POST()) {
 
             # Validate file upload errors
             if ($file["error"] !== UPLOAD_ERR_OK) {
-                throw new Exception("File upload failed");
+                throw new Exception("File upload failed". $file["error"]);
             }
             # Validate file size
             if ($file["size"] > $maxFileSize) {
@@ -87,18 +87,19 @@ if (Method::POST()) {
 
             # Validates MIME type
             if (!in_array($detectedType, $allowedTypes)) {
-                throw new Exception("Unsupported file type");
+                throw new Exception("Unsupported file type: ".$detectedType);
             }
 
             # Validates file extension
             $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
             if (!in_array($extension, $allowedExtensions)) {
-                throw new Exception("Unsupported file extension");
+                throw new Exception("Unsupported file extension: ".$extension);
             }
 
             # Generates a safe filename and create the target path
             $safeFilename = $filename . "_" . md5(uniqid() . microtime(true)) . '.' . $extension;
             $targetPath = $userSpecificDir . $safeFilename;
+            
             # Validates that the file was uploaded via HTTP POST
             if (!is_uploaded_file($file["tmp_name"])) {
                 throw new Exception("Invalid file source");
