@@ -203,24 +203,24 @@
             <!-- Installation -->
             <div class="" id="installation">
               <div class="card info-card customers-card">
-                  <div class="card-body">
-                      <h5 class="card-title">Installation <span>| JS</span></h5>
-                      <p>
-                          To get started with ekiliRelay, use npm to install and include it in your project.
-                      </p>
-                      <ol>
-                          <li>Install the mailer using npm:</li>
-                          <pre>
+                <div class="card-body">
+                  <h5 class="card-title">Installation <span>| JS</span></h5>
+                  <p>
+                    To get started with ekiliRelay, use npm to install and include it in your project.
+                  </p>
+                  <ol>
+                    <li>Install the mailer using npm:</li>
+                    <pre>
 <code class="language-javascript">npm i ekilirelay</code></pre>
-                          <li>Import the mailer into your project:</li>
-<pre><code class="language-javascript">import EkiliRelay from 'ekilirelay';</code></pre>
-                          <li>
-                            Get you api key <a href="../console/">API KEY</a>
-                          </li>
+                    <li>Import the mailer into your project:</li>
+                    <pre><code class="language-javascript">import EkiliRelay from 'ekilirelay';</code></pre>
+                    <li>
+                      Get you api key <a href="../console/">API KEY</a>
+                    </li>
 
-                      </ol>
+                  </ol>
 
-                  </div>
+                </div>
               </div>
             </div>
             <!-- End Installation -->
@@ -230,7 +230,8 @@
                 <div class="card-body">
                   <h5 class="card-title">Usage <span>| JS/TS</span></h5>
                   <p>
-                    After including the mailer, you can start using EkiliRelay to send emails. Here's a quick example for different frameworks and libraries:
+                    After including the mailer, you can start using EkiliRelay to send emails. Here's a quick example
+                    for different frameworks and libraries:
                   </p>
 
                   <!-- Vanilla JavaScript Example -->
@@ -333,10 +334,53 @@ export default function Home() {
 }
             </code></pre>
 
+                  <!-- PHP Example -->
+                  <h6>PHP</h6>
+                  <pre><code class="language-php">// Class implementation
+class EkiliRelay {
+  private $apikey;
+  private $apiUrl = "https://relay.ekilie.com/api/index.php";
+
+  public function __construct($apikey) {
+    $this->apikey = $apikey;
+  }
+
+  public function sendEmail($to, $subject, $message, $headers = '') {
+    $data = [
+      'to' => $to,
+      'subject' => $subject,
+      'message' => $message,
+      'headers' => $headers,
+      'apikey' => $this->apikey
+    ];
+    
+    $ch = curl_init($this->apiUrl);
+    curl_setopt_array($ch, [
+      CURLOPT_POST => true,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+      CURLOPT_POSTFIELDS => json_encode($data)
+    ]);
+    
+    $response = curl_exec($ch);
+    return json_decode($response, true);
+  }
+}
+
+// Usage
+$mailer = new EkiliRelay('API_KEY');
+$response = $mailer->sendEmail(
+  'to@example.com', 
+  'PHP Test', 
+  'Hello from PHP!', 
+  'From: PHP Sender <php@example.com>'
+);</code></pre>
+
 
 
                   <p>
-                    These examples demonstrate how to initialize the EkiliRelay mailer and send an email using various JavaScript frameworks.
+                    These examples demonstrate how to initialize the EkiliRelay mailer and send an email using various
+                    JavaScript frameworks.
                   </p>
                 </div>
               </div>
