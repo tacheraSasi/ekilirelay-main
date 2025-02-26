@@ -8,8 +8,6 @@ Api::Header("Content-Type: application/json");
 Api::Header("X-Content-Type-Options: nosniff");
 Api::Header("X-Frame-Options: DENY");
 
-// creating the uploads table if not exists
-createUploadsTable($conn);
 
 $uploadDir = API::storageUploadDir();
 $maxFileSize = 100 * 1024 * 1024;
@@ -126,17 +124,3 @@ if (Method::POST()) {
 }
 
 
-function createUploadsTable($conn){
-    $sql = "CREATE TABLE IF NOT EXISTS uploads (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT NOT NULL,
-        original_name VARCHAR(255) NOT NULL,
-        stored_name VARCHAR(255) NOT NULL,
-        file_type VARCHAR(255) NOT NULL,
-        file_size INT NOT NULL,
-        extension VARCHAR(10) NOT NULL,
-        upload_time DATETIME NOT NULL,
-        url VARCHAR(255) NOT NULL
-    )";
-    $conn->query($sql);
-}
