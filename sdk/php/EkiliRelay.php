@@ -40,7 +40,7 @@ class EkiliRelay {
         // Construct the payload to be sent to the API
         $data = [
             'to' => $to,               // Recipient's email address
-            'subject' => $subject,     // Subject line of the email
+            'subject' => $subject,     // Subject line of the email 
             'message' => $message,     // Body of the email
             'headers' => $headers,     // Optional additional headers
             'apikey' => $this->apikey  // API key for authentication
