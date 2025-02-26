@@ -120,6 +120,20 @@
   </style>
 </head>
 
+<script>
+  Prism.languages.php = Prism.languages.extend('clike', {
+    'keyword': /\b(?:class|function|require_once|echo|new|if|else|try|catch)\b/,
+    'variable': /\$[\w]+/,
+    'operator': /=>|::|\\|\?/,
+  });
+  Prism.languages.insertBefore('php', 'keyword', {
+    'delimiter': {
+      pattern: /(\?>|<\?php)/,
+      alias: 'important'
+    }
+  });
+</script>
+
 <body>
   <!-- Header -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -375,6 +389,36 @@ $response = $mailer->sendEmail(
   'Hello from PHP!', 
   'From: PHP Sender <php@example.com>'
 );</code></pre>
+
+ <!-- Python Example -->
+ <h6>Python</h6>
+
+<pre><code class="language-python">import requests
+
+  def send_email(api_key, to, subject, message, headers=''):
+      url = "https://relay.ekilie.com/api/index.php"
+      payload = {
+          "apikey": api_key,
+          "to": to,
+          "subject": subject,
+          "message": message,
+          "headers": headers
+      }
+      try:
+          response = requests.post(url, json=payload)
+          return response.json()
+      except Exception as e:
+          return {"status": "error", "message": str(e)}
+  
+  # Usage
+  response = send_email(
+      "API_KEY",
+      "python@example.com",
+      "Python Test",
+      "Hello from Python!",
+      "From: Python <python@example.com>"
+  )
+  print(response)</code></pre>
 
 
 
