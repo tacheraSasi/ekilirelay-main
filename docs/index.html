@@ -390,10 +390,10 @@ $response = $mailer->sendEmail(
   'From: PHP Sender <php@example.com>'
 );</code></pre>
 
- <!-- Python Example -->
- <h6>Python</h6>
+                  <!-- Python Example -->
+                  <h6>Python</h6>
 
-<pre><code class="language-python">import requests
+                  <pre><code class="language-python">import requests
 
   def send_email(api_key, to, subject, message, headers=''):
       url = "https://relay.ekilie.com/api/index.php"
@@ -420,11 +420,21 @@ $response = $mailer->sendEmail(
   )
   print(response)</code></pre>
 
+<h6>cURL</h6>
+  <pre><code class="language-bash">curl -X POST "https://relay.ekilie.com/api/index.php" \
+    -H "Content-Type: application/json" \
+    -d '{
+      "apikey": "API_KEY",
+      "to": "curl@example.com",
+      "subject": "cURL Test",
+      "message": "Hello from command line!",
+      "headers": "From: cURL User <curl@example.com>"
+    }'</code></pre>
 
 
                   <p>
                     These examples demonstrate how to initialize the EkiliRelay mailer and send an email using various
-                    JavaScript frameworks.
+                    languages and JavaScript frameworks.
                   </p>
                 </div>
               </div>
