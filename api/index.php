@@ -13,100 +13,138 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();  
 }
 
+#adding table
+$conn->query("CREATE TABLE IF NOT EXISTS api_requests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    endpoint VARCHAR(255) NOT NULL,
+    method VARCHAR(10) NOT NULL,
+    ip_address VARCHAR(45) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status_code INT NOT NULL,
+    parameters TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(unique_id)
+);");
+
 # Setting the content type to JSON
 header('Content-Type: application/json');
 
 # Function for validating an email address
-function validateEmail($email) {
+function validateEmail($email)
+{
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
-# Function to log requests to the database
-function logRequest($conn, $userId, $statusCode, $data = []) {
-    $endpoint = $_SERVER['REQUEST_URI'];
-    $method = $_SERVER['REQUEST_METHOD'];
-    $ip = $_SERVER['REMOTE_ADDR'];
-    $parameters = json_encode($data);
-
-    $userId = $userId ? intval($userId) : 'NULL';
-    $endpoint = mysqli_real_escape_string($conn, $endpoint);
-    $method = mysqli_real_escape_string($conn, $method);
-    $ip = mysqli_real_escape_string($conn, $ip);
-    $parameters = mysqli_real_escape_string($conn, $parameters);
-    $statusCode = intval($statusCode);
-
-    $query = "INSERT INTO api_requests (user_id, endpoint, method, ip_address, status_code, parameters)
-              VALUES ($userId, '$endpoint', '$method', '$ip', $statusCode, '$parameters')";
-    mysqli_query($conn, $query);
+# Function for logging messages to a file
+function logMessage($message)
+{
+    // file_put_contents('../logs/email.log', $message . PHP_EOL, FILE_APPEND);
 }
 
 # Checking if the request method is POST
 if (Method::POST()) {
 
-    # Decoding the incoming JSON payload
-    $data = json_decode(file_get_contents('php://input'), true) ?? [];
-    $apikey = $data['apikey'] ?? '';
+    # Decoding the incoming JSON payload into an associative array
+    $data = json_decode(file_get_contents('php://input'), true);
 
-    # Validate required parameters
-    if (!isset($data['to'], $data['subject'], $data['message'], $data['apikey'])) {
-        $response = ['status' => 'error', 'message' => 'Missing required parameters'];
-        logRequest($conn, null, 400, $data);
-        Api::Response($response, 400);
-    }
+    # Checking if the required parameters are present
+    if (isset($data['to'], $data['subject'], $data['message'], $data['apikey'])) {
 
-    # Validate API Key
-    $apikey = mysqli_real_escape_string($conn, $apikey);
-    $select = mysqli_query($conn, "SELECT user FROM data WHERE api_key = '$apikey'");
-    
-    if (!$select || mysqli_num_rows($select) === 0) {
-        $response = ['status' => 'error', 'message' => 'Invalid API key'];
-        logRequest($conn, null, 401, $data);
-        Api::Response($response, 401);
-    }
+        # Escaping the API key to prevent SQL injection
+        $apikey = mysqli_real_escape_string($conn, $data['apikey']);
 
-    $user_id = mysqli_fetch_assoc($select)['user'];
+        # Querying the user associated with the provided API key
+        $select = mysqli_query($conn, "SELECT user FROM data WHERE api_key = '$apikey';");
 
-    # Retrieve user details
-    $select_user = mysqli_query($conn, "SELECT name, email FROM users WHERE unique_id = '$user_id'");
-    $user_info = mysqli_fetch_assoc($select_user);
+        # Verifying if the API key is valid
+        if ($select && mysqli_num_rows($select) > 0) {
+            # Retrieving the user ID from the query result
+            $user_id = mysqli_fetch_array($select)['user'];
 
-    if (!$user_info) {
-        $response = ['status' => 'error', 'message' => 'User not found'];
-        logRequest($conn, $user_id, 404, $data);
-        Api::Response($response, 404);
-    }
+            # Retrieve the current number of requests for the user
+            $select_num_req = mysqli_query($conn, "SELECT requests FROM data WHERE user = '$user_id'");
 
-    # Prepare email
-    $to = $data['to'];
-    $subject = $data['subject'];
-    $message = Config::defaultTemplate($data['message']);
-    $headers = EmailService::buildHeaders($user_info['name'], $user_info['email']);
+            if ($select_num_req) {
+                # Fetch the current number of requests
+                $num_req = mysqli_fetch_assoc($select_num_req)['requests'];
 
-    # Validate email
-    if (!validateEmail($to)) {
-        $response = ['status' => 'error', 'message' => 'Invalid recipient email'];
-        logRequest($conn, $user_id, 400, $data);
-        Api::Response($response, 400);
-    }
+                # Increment the number of requests
+                $num_req++;
 
-    # Send email
-    try {
-        EmailService::send($to, $subject, $message, $headers);
-        
-        # Update emails_sent count
-        mysqli_query($conn, "UPDATE data SET emails_sent = emails_sent + 1 WHERE user = '$user_id'");
-        
-        $response = ['status' => 'success', 'message' => 'Email sent'];
-        logRequest($conn, $user_id, 200, $data);
+                # Update the number of requests in the database
+                $update_req = mysqli_query($conn, "UPDATE data SET requests = $num_req WHERE user = '$user_id'");
+            }
+
+            # Querying the user's information based on the unique ID
+            $select_user = mysqli_query($conn, "SELECT name, email FROM users WHERE unique_id = '$user_id';");
+            $user_info = mysqli_fetch_array($select_user);
+
+            # Assigning user's name and email to variables
+            $user_name = $user_info['name'];
+            $user_email = $user_info['email'];
+
+            # Setting the email fields from the input data
+            $to = $data['to'];
+            $subject = $data['subject'];
+            $message = Config::defaultTemplate($data['message']);#Using the default template
+
+            # Adding the necessary email headers
+            $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            $headers .= isset($data['headers']) ? $data['headers'] : "From: $user_name <$user_email>";
+            // Api::Response($headers);  # For debugging purposes
+
+            # Validating the recipient's email address
+            if (!validateEmail($to)) {
+                $response = ['status' => 'error', 'message' => 'Invalid email address.'];
+                Api::Response($response);
+                logMessage(json_encode($response));
+                exit;
+            }
+
+            # Attempting to send the email
+            if (mail($to, $subject, $message, $headers)) {
+                # If the email is sent, I update the emails_sent count
+                $select_num_sent = mysqli_query($conn, "SELECT emails_sent FROM data WHERE user = '$user_id'");
+
+                if ($select_num_sent) {
+                    # Fetch the current number of emails_sent
+                    $num_sent = mysqli_fetch_assoc($select_num_sent)['emails_sent'];
+
+                    # Increment the number of emails_sent
+                    $num_sent++;
+
+                    # Update the number of emails_sent in the database
+                    $update_req = mysqli_query($conn, "UPDATE data SET emails_sent = $num_sent WHERE user = '$user_id'");
+                }
+
+                # Responding with a success message
+                $response = ['status' => 'success', 'message' => 'Email sent successfully.'];
+                Api::Response($response);
+                logMessage(json_encode($response));
+            } else {
+                # Responding with an error if email fails to send
+                $response = ['status' => 'error', 'message' => 'Failed to send email.'];
+                Api::Response($response);
+                logMessage(json_encode($response));
+            }
+
+        } else {
+            # Responding with an error if the API key is invalid
+            $response = ['status' => 'error', 'message' => 'Invalid API key. Visit https://relay.ekilie.com to get the correct one.'];
+            Api::Response($response);
+        }
+
+    } else {
+        # Responding with an error if required parameters are missing
+        $response = ['status' => 'error', 'message' => 'Missing parameters (to, subject, message, or apikey).'];
         Api::Response($response);
-    } catch (Exception $e) {
-        $response = ['status' => 'error', 'message' => $e->getMessage()];
-        logRequest($conn, $user_id, 500, $data);
-        Api::Response($response, 500);
+        logMessage(json_encode($response));
     }
 
 } else {
-    $response = ['status' => 'error', 'message' => 'Method not allowed'];
-    logRequest($conn, null, 405, []);
-    Api::Response($response, 405);
+    # Responding with an error if the request method is not POST
+    $response = ['status' => 'error', 'message' => 'Invalid request method. Only POST is allowed.'];
+    Api::Response($response);
+    logMessage(json_encode($response));
 }

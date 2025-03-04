@@ -47,6 +47,24 @@ class Api {
         return $data;
     }
 
+    public static function logRequest($conn, $userId, $statusCode, $data = []) {
+        $endpoint = $_SERVER['REQUEST_URI'];
+        $method = $_SERVER['REQUEST_METHOD'];
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $parameters = json_encode($data);
+    
+        $userId = $userId ? intval($userId) : 'NULL';
+        $endpoint = mysqli_real_escape_string($conn, $endpoint);
+        $method = mysqli_real_escape_string($conn, $method);
+        $ip = mysqli_real_escape_string($conn, $ip);
+        $parameters = mysqli_real_escape_string($conn, $parameters);
+        $statusCode = intval($statusCode);
+    
+        $query = "INSERT INTO api_requests (user_id, endpoint, method, ip_address, status_code, parameters)
+                  VALUES ($userId, '$endpoint', '$method', '$ip', $statusCode, '$parameters')";
+        mysqli_query($conn, $query);
+    }
+
     public static function validateUpload($file, $maxSize, $allowedTypes, $allowedExtensions, $detectedType, $extension) {
         $errorMessages = [
             UPLOAD_ERR_INI_SIZE => 'File exceeds server size limit',
