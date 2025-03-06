@@ -146,5 +146,6 @@ if (Method::POST()) {
     # Responding with an error if the request method is not POST
     $response = ['status' => 'error', 'message' => 'Invalid request method. Only POST is allowed.'];
     Api::Response($response);
+    Api::logRequest($conn, $response, 405);
     logMessage(json_encode($response));
 }
