@@ -47,7 +47,7 @@ class Api {
         return $data;
     }
 
-    public static function logRequest($conn, $userId, $statusCode, $data = []) {
+    public static function logRequest($conn, $userId="", $statusCode, $data = []) {
         $endpoint = $_SERVER['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
         $ip = $_SERVER['REMOTE_ADDR'];

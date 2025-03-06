@@ -98,6 +98,7 @@ if (Method::POST()) {
             if (!validateEmail($to)) {
                 $response = ['status' => 'error', 'message' => 'Invalid email address.'];
                 Api::Response($response);
+                Api::logRequest($conn,$user_id,405);
                 logMessage(json_encode($response));
                 exit;
             }
@@ -121,11 +122,13 @@ if (Method::POST()) {
                 # Responding with a success message
                 $response = ['status' => 'success', 'message' => 'Email sent successfully.'];
                 Api::Response($response);
+                Api::logRequest($conn,$user_id,200);
                 logMessage(json_encode($response));
             } else {
                 # Responding with an error if email fails to send
                 $response = ['status' => 'error', 'message' => 'Failed to send email.'];
                 Api::Response($response);
+                Api::logRequest($conn,$user_id,500);
                 logMessage(json_encode($response));
             }
 
@@ -133,12 +136,14 @@ if (Method::POST()) {
             # Responding with an error if the API key is invalid
             $response = ['status' => 'error', 'message' => 'Invalid API key. Visit https://relay.ekilie.com to get the correct one.'];
             Api::Response($response);
+            Api::logRequest($conn,'',405);
         }
 
     } else {
         # Responding with an error if required parameters are missing
         $response = ['status' => 'error', 'message' => 'Missing parameters (to, subject, message, or apikey).'];
         Api::Response($response);
+        Api::logRequest($conn,'',405);
         logMessage(json_encode($response));
     }
 
@@ -146,6 +151,6 @@ if (Method::POST()) {
     # Responding with an error if the request method is not POST
     $response = ['status' => 'error', 'message' => 'Invalid request method. Only POST is allowed.'];
     Api::Response($response);
-    Api::logRequest($conn, $response, 405);
+    Api::logRequest($conn,'',405);
     logMessage(json_encode($response));
 }
