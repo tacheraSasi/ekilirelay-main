@@ -23,7 +23,6 @@ $conn->query("CREATE TABLE IF NOT EXISTS api_requests (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status_code INT NOT NULL,
     parameters TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(unique_id)
 );");
 
 # Setting the content type to JSON
