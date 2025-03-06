@@ -22,7 +22,7 @@ $conn->query("CREATE TABLE IF NOT EXISTS api_requests (
     ip_address VARCHAR(45) NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status_code INT NOT NULL,
-    parameters TEXT,
+    parameters TEXT
 );");
 
 # Setting the content type to JSON
