@@ -26,7 +26,7 @@ $conn->query("CREATE TABLE IF NOT EXISTS api_requests (
 );");
 
 # Setting the content type to JSON
-header('Content-Type: application/json');
+Api::Header('Content-Type: application/json');
 
 # Function for validating an email address
 function validateEmail($email)
