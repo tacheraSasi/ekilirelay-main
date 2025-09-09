@@ -137,7 +137,8 @@ if (Method::POST()) {
                     'subject' => $subject,
                     'message' => $message,
                     'headers' => $headers,
-                    'error' => 'mail() failed'
+                    'error' => 'mail() failed',
+                    'php_error' => (error_get_last() ? error_get_last()['message'] : null)
                 ];
                 file_put_contents('../logs/errors.log', json_encode($error_details) . PHP_EOL, FILE_APPEND);
             }
