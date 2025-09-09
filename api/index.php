@@ -129,6 +129,17 @@ if (Method::POST()) {
                 Api::Response($response);
                 Api::logRequest($conn,$user_id,500);
                 logMessage(json_encode($response));
+                // Log error to errors.log
+                $error_details = [
+                    'timestamp' => date('Y-m-d H:i:s'),
+                    'user_id' => $user_id,
+                    'to' => $to,
+                    'subject' => $subject,
+                    'message' => $message,
+                    'headers' => $headers,
+                    'error' => 'mail() failed'
+                ];
+                file_put_contents('../logs/errors.log', json_encode($error_details) . PHP_EOL, FILE_APPEND);
             }
 
         } else {
